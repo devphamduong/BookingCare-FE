@@ -3,16 +3,29 @@ import { FormattedMessage } from 'react-intl';
 import './Login.scss';
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { handleLogin } from '../../services/userService';
+import { userLoginSuccess } from "../../store/actions";
 
 function Login(props) {
     const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errMessage, setErrMessage] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
 
-    const handleLogin = () => {
+    const handleUserLogin = async () => {
+        setErrMessage('');
+        try {
+            let data = await handleLogin(username, password);
+            if (data && data.errCode !== 0) {
+                setErrMessage(data.errMessage);
+            } else if (data && data.errCode === 0) {
+                dispatch(userLoginSuccess(data.user));
+            }
+        } catch (error) {
 
+        }
     };
 
     return (
@@ -29,11 +42,16 @@ function Login(props) {
                             <label>Password</label>
                             <div className="custom-input-password">
                                 <input type={!isShowPassword ? "password" : "text"} className="form-control" placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} />
-                                <i className={!isShowPassword ? "fas fa-eye" : "fas fa-eye-slash"} onClick={() => setIsShowPassword(!isShowPassword)}></i>
+                                {password &&
+                                    <i className={!isShowPassword ? "fas fa-eye" : "fas fa-eye-slash"} onClick={() => setIsShowPassword(!isShowPassword)}></i>
+                                }
                             </div>
                         </div>
+                        <div className="col-12 text-danger">
+                            {errMessage}
+                        </div>
                         <div className="col-12">
-                            <button className="btn-login" onClick={() => handleLogin()}>Login</button>
+                            <button className="btn-login" onClick={() => handleUserLogin()}>Login</button>
                         </div>
                         <div className="col-12">
                             <span className="forgot-password">Forgot your password?</span>
