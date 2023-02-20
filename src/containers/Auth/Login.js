@@ -2,10 +2,18 @@ import * as actions from "../../store/actions";
 import { FormattedMessage } from 'react-intl';
 import './Login.scss';
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 function Login(props) {
     const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isShowPassword, setIsShowPassword] = useState(false);
+
+    const handleLogin = () => {
+
+    };
 
     return (
         <>
@@ -15,14 +23,17 @@ function Login(props) {
                         <div className="col-12 text-login">Login</div>
                         <div className="col-12 form-group login-input">
                             <label>Username</label>
-                            <input type="text" className="form-control" placeholder="Enter your username" />
+                            <input type="text" className="form-control" placeholder="Enter your username" value={username} onChange={(event) => setUsername(event.target.value)} />
                         </div>
                         <div className="col-12 form-group login-input">
                             <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Enter your password" />
+                            <div className="custom-input-password">
+                                <input type={!isShowPassword ? "password" : "text"} className="form-control" placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} />
+                                <i className={!isShowPassword ? "fas fa-eye" : "fas fa-eye-slash"} onClick={() => setIsShowPassword(!isShowPassword)}></i>
+                            </div>
                         </div>
                         <div className="col-12">
-                            <button className="btn-login">Login</button>
+                            <button className="btn-login" onClick={() => handleLogin()}>Login</button>
                         </div>
                         <div className="col-12">
                             <span className="forgot-password">Forgot your password?</span>
