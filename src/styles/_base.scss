@@ -11,23 +11,25 @@ html {
   height           : 100vh;
   overflow         : hidden;
   box-sizing       : border-box;
+  margin           : 0;
+  padding          : 0;
 }
 
-.btn {
-  padding            : 0;
-  border             : none;
-  cursor             : pointer;
-  font-weight        : 700;
-  height             : 30px;
-  line-height        : 30px;
-  -moz-user-select   : none;
-  -webkit-user-select: none;
-  user-select        : none;
+// .btn {
+//   padding            : 0;
+//   border             : none;
+//   cursor             : pointer;
+//   font-weight        : 700;
+//   height             : 30px;
+//   line-height        : 30px;
+//   -moz-user-select   : none;
+//   -webkit-user-select: none;
+//   user-select        : none;
 
-  i {
-    font-size: $base-size - 3px;
-  }
-}
+//   i {
+//     font-size: $base-size - 3px;
+//   }
+// }
 
 .btn-edit,
 .btn-add,
