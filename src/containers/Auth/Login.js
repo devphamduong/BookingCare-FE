@@ -19,7 +19,7 @@ function Login(props) {
         try {
             let data = await handleLogin(username, password);
             if (data && data.errCode !== 0) {
-                setErrMessage(data.errMessage);
+                setErrMessage(data.message);
             } else if (data && data.errCode === 0) {
                 dispatch(userLoginSuccess(data.user));
             }
