@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { getAllUsers } from '../../services/userService';
+import { getAllUsers, createUser } from '../../services/userService';
 import ModalCreateUser from './ModalCreateUser';
 import './UserManage.scss';
 
@@ -9,12 +9,31 @@ function UserManage(props) {
     const [showModalCreate, setShowModalCreate] = useState(false);
     const handleCloseModalCreate = () => setShowModalCreate(false);
 
-    useEffect(async () => {
+    useEffect(() => {
+        fetchAllUsers();
+    }, []);
+
+    const fetchAllUsers = async () => {
         let res = await getAllUsers('ALL');
         if (res && res.errCode === 0) {
             setListUsers(res.users);
         }
-    }, []);
+    };
+
+    const createNewUser = async (data) => {
+        try {
+            let res = await createUser(data);
+            if (res && res.errCode === 0) {
+                await fetchAllUsers();
+                setShowModalCreate(false);
+            } else {
+                alert(res.errMessage);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     return (
         <>
@@ -53,7 +72,7 @@ function UserManage(props) {
                     </table>
                 </div>
             </div>
-            <ModalCreateUser showModalCreate={showModalCreate} handleCloseModalCreate={handleCloseModalCreate} />
+            <ModalCreateUser showModalCreate={showModalCreate} handleCloseModalCreate={handleCloseModalCreate} createNewUser={createNewUser} />
         </>
     );
 }

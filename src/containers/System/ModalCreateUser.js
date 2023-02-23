@@ -1,7 +1,41 @@
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { useImmer } from 'use-immer';
 
 function ModalCreateUser(props) {
-    const { showModalCreate, handleCloseModalCreate } = props;
+    const { showModalCreate, handleCloseModalCreate, createNewUser } = props;
+    const [inputs, setInputs] = useImmer({
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        address: ''
+    });
+
+    const handleOnChangeInput = (event, id) => {
+        setInputs(draft => {
+            draft[id] = event.target.value;
+        });
+    };
+
+    const checkValidInput = () => {
+        let isValid = true;
+        let arrInputs = ['email', 'password', 'firstName', 'lastName', 'address'];
+        for (let i = 0; i < arrInputs.length; i++) {
+            if (!inputs[arrInputs[i]]) {
+                isValid = false;
+                alert('Missing parameter: ' + arrInputs[i]);
+                break;
+            }
+        }
+        return isValid;
+    };
+
+    const handleCreateUser = () => {
+        let isValid = checkValidInput();
+        if (isValid) {
+            createNewUser(inputs);
+        }
+    };
 
     return (
         <Modal isOpen={showModalCreate} toggle={handleCloseModalCreate} className="modal-create-user-container"
@@ -11,47 +45,28 @@ function ModalCreateUser(props) {
                 <div className='modal-create-user-body'>
                     <div className="form-group input-container">
                         <label>Email</label>
-                        <input type="email" className="form-control" placeholder="Email" />
+                        <input type="email" className="form-control" placeholder="Email" value={inputs.email} onChange={(event) => handleOnChangeInput(event, 'email')} />
                     </div>
                     <div className="form-group input-container">
                         <label>Password</label>
-                        <input type="password" className="form-control" placeholder="Password" />
+                        <input type="password" className="form-control" placeholder="Password" value={inputs.password} onChange={(event) => handleOnChangeInput(event, 'password')} />
                     </div>
                     <div className="form-group input-container">
                         <label>First name</label>
-                        <input type="text" className="form-control" placeholder="First name" />
+                        <input type="text" className="form-control" placeholder="First name" value={inputs.firstName} onChange={(event) => handleOnChangeInput(event, 'firstName')} />
                     </div>
                     <div className="form-group input-container">
                         <label>Last name</label>
-                        <input type="text" className="form-control" placeholder="Last name" />
+                        <input type="text" className="form-control" placeholder="Last name" value={inputs.lastName} onChange={(event) => handleOnChangeInput(event, 'lastName')} />
                     </div>
                     <div className="form-group input-container max-width-input">
                         <label>Address</label>
-                        <input type="text" className="form-control" placeholder="Apartment, studio, or floor" />
+                        <input type="text" className="form-control" placeholder="Apartment, studio, or floor" value={inputs.address} onChange={(event) => handleOnChangeInput(event, 'address')} />
                     </div>
-                    {/* <div className="form-group input-container">
-                        <label>Phone number</label>
-                        <input type="text" className="form-control" placeholder='Phone number' />
-                    </div> */}
-                    {/* <div className="form-group input-container">
-                        <label>Gender</label>
-                        <select className="form-control">
-                            <option selected value="0">Male</option>
-                            <option value="1">Female</option>
-                        </select>
-                    </div>
-                    <div className="form-group input-container">
-                        <label>Role</label>
-                        <select className="form-control">
-                            <option selected value="1">Admin</option>
-                            <option value="2">Doctor</option>
-                            <option value="3">Patient</option>
-                        </select>
-                    </div> */}
                 </div>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={handleCloseModalCreate}>Create</Button>
+                <Button color="primary" onClick={() => handleCreateUser()}>Create</Button>
                 <Button color="secondary" onClick={handleCloseModalCreate}>Cancel</Button>
             </ModalFooter>
         </Modal>
