@@ -1,5 +1,6 @@
 export const path = {
     HOME: '/',
+    HOMEPAGE: '/home',
     LOGIN: '/login',
     LOG_OUT: '/logout',
     SYSTEM: '/system'
@@ -9,7 +10,7 @@ export const languages = {
     VI: 'vi',
     EN: 'en'
 };
- 
+
 export const manageActions = {
     ADD: "ADD",
     EDIT: "EDIT",
@@ -23,4 +24,4 @@ export const dateFormat = {
 export const YesNoObj = {
     YES: 'Y',
     NO: 'N'
-}
+};
