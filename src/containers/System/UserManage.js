@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { getAllUsers, createUser, deleteUser } from '../../services/userService';
-import ModalCreateUser from './ModalCreateUser';
+import { getAllUsers, createUser, deleteUser, updateUser } from '../../services/userService';
+import ModalUser from './ModalUser';
 import { emitter } from '../../utils/emitter';
 import './UserManage.scss';
 
@@ -9,6 +9,9 @@ function UserManage(props) {
     const [listUsers, setListUsers] = useState([]);
     const [showModalCreate, setShowModalCreate] = useState(false);
     const handleCloseModalCreate = () => setShowModalCreate(false);
+    const [showModalUpdate, setShowModalUpdate] = useState(false);
+    const handleCloseModalUpdate = () => setShowModalUpdate(false);
+    const [dataUser, setDataUser] = useState({});
 
     useEffect(() => {
         fetchAllUsers();
@@ -28,6 +31,25 @@ function UserManage(props) {
                 await fetchAllUsers();
                 setShowModalCreate(false);
                 emitter.emit('EVENT_CLEAR_DATA_MODAL_CREATE_USER');
+            } else {
+                alert(res.errMessage);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleEditUser = (user) => {
+        setShowModalUpdate(true);
+        setDataUser(user);
+    };
+
+    const doUpdateUser = async (user) => {
+        try {
+            let res = await updateUser(user);
+            if (res && res.errCode === 0) {
+                await fetchAllUsers();
+                handleCloseModalUpdate();
             } else {
                 alert(res.errMessage);
             }
@@ -75,7 +97,7 @@ function UserManage(props) {
                                             <td>{item.lastName}</td>
                                             <td>{item.address}</td>
                                             <td>
-                                                <button className='btn btn-warning mx-1'><i className="fas fa-pencil-alt"></i></button>
+                                                <button className='btn btn-warning mx-1' onClick={() => handleEditUser(item)}><i className="fas fa-pencil-alt"></i></button>
                                                 <button className='btn btn-danger mx-1' onClick={() => handleDeleteUser(item)}><i className="fas fa-trash-alt"></i></button>
                                             </td>
                                         </tr>
@@ -86,7 +108,7 @@ function UserManage(props) {
                     </table>
                 </div>
             </div>
-            <ModalCreateUser showModalCreate={showModalCreate} handleCloseModalCreate={handleCloseModalCreate} createNewUser={createNewUser} />
+            <ModalUser showModalCreate={showModalCreate} handleCloseModalCreate={handleCloseModalCreate} createNewUser={createNewUser} showModalUpdate={showModalUpdate} handleCloseModalUpdate={handleCloseModalUpdate} dataUser={dataUser} doUpdateUser={doUpdateUser} />
         </>
     );
 }
