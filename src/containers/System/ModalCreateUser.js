@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useImmer } from 'use-immer';
+import { emitter } from '../../utils/emitter';
 
 function ModalCreateUser(props) {
     const { showModalCreate, handleCloseModalCreate, createNewUser } = props;
@@ -10,6 +12,22 @@ function ModalCreateUser(props) {
         lastName: '',
         address: ''
     });
+
+    useEffect(() => {
+        listenToEmitter();
+    }, []);
+
+    const listenToEmitter = () => {
+        emitter.on('EVENT_CLEAR_DATA_MODAL_CREATE_USER', () => {
+            setInputs({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                address: ''
+            });
+        });
+    };
 
     const handleOnChangeInput = (event, id) => {
         setInputs(draft => {
