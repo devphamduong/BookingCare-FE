@@ -52,6 +52,144 @@
             align-items    : center;
             justify-content: center;
             gap            : 10px;
+
+            .language {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+$icons:(icon1: url(../../assets/icon-khamchuyenkhoa.png),
+    icon2: url(../../assets/icon-khamtuxa.png),
+    icon3: url(../../assets/icon-khamtongquat.png),
+    icon4: url(../../assets/icon-dichvuxetnghiem.png),
+    icon5: url(../../assets/icon-suckhoetinhthan.png),
+    icon6: url(../../assets/icon-khamnhakhoa.png),
+    icon7: url(../../assets/icon-phauthuat.jpg),
+    icon8: url(../../assets/icon-khamtainha.png),
+    icon9: url(../../assets/icon-suckhoedoanhnghiep.jpg),
+);
+
+@each $name,
+$url in $icons {
+    .#{$name} {
+        background-image   : $url;
+        height             : 100%;
+        width              : 100%;
+        background-position: center;
+        background-repeat  : no-repeat;
+        background-size    : contain;
+    }
+}
+
+.home-header-banner {
+    background         : url(../../assets/bookingcare-cover.jpg);
+    background-position: center;
+    background-repeat  : no-repeat;
+    background-size    : cover;
+    height             : 600px;
+    display            : flex;
+    flex-direction     : column;
+
+    .home-header-banner-sub1 {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
+        padding         : 45px 0;
+        color           : #333;
+        text-align      : center;
+        height          : 50%;
+        padding-top     : 15px;
+        padding-bottom  : 414px;
+
+        .title1 {
+            color        : white;
+            text-align   : center;
+            font-size    : 30px;
+            text-shadow  : 1px 1px 1px #333;
+            margin-bottom: 5px;
+            margin-top   : 51px;
+        }
+
+        .title2 {
+            color        : white;
+            text-align   : center;
+            font-size    : 30px;
+            text-shadow  : 1px 1px 1px #333;
+            font-weight  : bold;
+            margin-bottom: 16px;
+        }
+
+        .search {
+            display         : flex;
+            align-items     : center;
+            margin          : 0 auto;
+            width           : fit-content;
+            border-radius   : 25px;
+            background-color: #f7d800;
+            padding         : 10px;
+
+
+            i {
+                margin: 0 5px;
+            }
+
+            input {
+                height    : 30px;
+                width     : 360px;
+                background: transparent;
+                border    : none;
+                outline   : none;
+            }
+        }
+    }
+
+    .home-header-banner-sub2 {
+        height          : 50%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
+        padding-top     : 30px;
+        position        : relative;
+
+        .options {
+            position       : absolute;
+            display        : flex;
+            text-align     : center;
+            gap            : 50px;
+            bottom         : 0;
+            left           : 50%;
+            transform      : translate(-50%, -50%);
+            width          : 100vw;
+            flex-wrap      : wrap;
+            justify-content: center;
+
+            .option-child {
+                width : 100px;
+                cursor: pointer;
+
+                &:hover .text-child {
+                    color: #49bce2;
+                }
+
+                .icon-child {
+                    background     : white;
+                    box-shadow     : rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                    width          : 50px;
+                    height         : 50px;
+                    padding        : 10px;
+                    border-radius  : 50%;
+                    text-align     : center;
+                    margin         : 0 auto;
+                    display        : flex;
+                    align-items    : center;
+                    justify-content: center;
+                    cursor         : pointer;
+                }
+
+                .text-child {
+                    font-size  : 16px;
+                    font-weight: 500;
+                    cursor     : pointer;
+                }
+            }
         }
     }
 }
