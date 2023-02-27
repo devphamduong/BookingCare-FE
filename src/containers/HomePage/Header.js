@@ -1,45 +1,55 @@
+import { FormattedMessage } from 'react-intl';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import './Header.scss';
+import { useSelector } from 'react-redux';
 
 function Header(props) {
+    const language = useSelector(state => state.app.language);
+
     return (
         <>
-            <div className="home-header-container">
-                <div className='home-header-content'>
-                    <div className='left-content'>
-                        <i className="fas fa-bars"></i>
+            <Navbar bg="light" expand="lg" className='home-header-container'>
+                <Container>
+                    <Navbar.Brand className='header-brand'>
                         <div className='header-logo'></div>
-                    </div>
-                    <div className='middle-content'>
-                        <div className='child-content'>
-                            <div><b>Chuyên khoa</b></div>
-                            <div className='sub-title'>Tìm bác sĩ theo chuyên khoa</div>
-                        </div>
-                        <div className='child-content'>
-                            <div><b>Cơ sở y tế</b></div>
-                            <div className='sub-title'>Chọn bệnh viện phòng khám</div>
-                        </div>
-                        <div className='child-content'>
-                            <div><b>Bác sĩ</b></div>
-                            <div className='sub-title'>Chọn bác sĩ giỏi</div>
-                        </div>
-                        <div className='child-content'>
-                            <div><b>Gói khám</b></div>
-                            <div className='sub-title'>Khám sức khỏe tổng quát</div>
-                        </div>
-                    </div>
-                    <div className='right-content'>
-                        <div className='support'><i class="fas fa-question-circle"></i> Hỗ trợ</div>
-                        <div className='language'>VN</div>
-                    </div>
-                </div>
-            </div>
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav" className='home-header-content'>
+                        <Nav className='middle-content'>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id='home-header.specialty' /></b></div>
+                                <div className='sub-title'><FormattedMessage id='home-header.search-doctor-specialty' /></div>
+                            </div>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id='home-header.medical-facility' /></b></div>
+                                <div className='sub-title'><FormattedMessage id='home-header.choose-clinic' /></div>
+                            </div>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id='home-header.doctor' /></b></div>
+                                <div className='sub-title'><FormattedMessage id='home-header.choose-doctor' /></div>
+                            </div>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id='home-header.checkup' /></b></div>
+                                <div className='sub-title'><FormattedMessage id='home-header.general-health-check' /></div>
+                            </div>
+                        </Nav>
+                        <Nav className='right-content'>
+                            <div className='support'><i class="fas fa-question-circle"></i> <span><FormattedMessage id='home-header.support' /></span></div>
+                            <div className='languages'>
+                                <div className='language-vi'>VN</div>
+                                <div className='language-en active'>EN</div>
+                            </div>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
             <div className='home-header-banner'>
                 <div className="home-header-banner-sub1">
-                    <div className='title1'>NỀN TẢNG Y TẾ</div>
-                    <div className='title2'>CHĂM SÓC SỨC KHỎE TOÀN DIỆN</div>
+                    <div className='title1'><FormattedMessage id='banner.title1' /></div>
+                    <div className='title2'><FormattedMessage id='banner.title2' /></div>
                     <div className='search'>
                         <i className="fas fa-search"></i>
-                        <input type={'text'} placeholder='Tìm chuyên khoa khám bệnh' />
+                        <input type={'text'} placeholder={<FormattedMessage id='banner.search-medical-specialty' />} />
                     </div>
                 </div>
                 <div className="home-header-banner-sub2">
@@ -49,7 +59,7 @@ function Header(props) {
                                 <div className='icon1'></div>
                             </div>
                             <div className="text-child">
-                                Khám Chuyên khoa
+                                <FormattedMessage id='banner.specialist-examination' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -57,7 +67,7 @@ function Header(props) {
                                 <div className='icon2'></div>
                             </div>
                             <div className="text-child">
-                                Khám từ xa
+                                <FormattedMessage id='banner.remote-examination' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -65,7 +75,7 @@ function Header(props) {
                                 <div className='icon3'></div>
                             </div>
                             <div className="text-child">
-                                Khám tổng quát
+                                <FormattedMessage id='banner.general-examination' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -73,7 +83,7 @@ function Header(props) {
                                 <div className='icon4'></div>
                             </div>
                             <div className="text-child">
-                                Xét nghiệm y học
+                                <FormattedMessage id='banner.medical-test' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -81,7 +91,7 @@ function Header(props) {
                                 <div className='icon5'></div>
                             </div>
                             <div className="text-child">
-                                Sức khỏe tinh thần
+                                <FormattedMessage id='banner.mental-health' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -89,7 +99,7 @@ function Header(props) {
                                 <div className='icon6'></div>
                             </div>
                             <div className="text-child">
-                                Khám nha khoa
+                                <FormattedMessage id='banner.dental-examination' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -97,7 +107,7 @@ function Header(props) {
                                 <div className='icon7'></div>
                             </div>
                             <div className="text-child">
-                                Gói phẫu thuật
+                                <FormattedMessage id='banner.surgery-package' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -105,7 +115,7 @@ function Header(props) {
                                 <div className='icon8'></div>
                             </div>
                             <div className="text-child">
-                                Sản phẩm y tế
+                                <FormattedMessage id='banner.medical-product' />
                             </div>
                         </div>
                         <div className="option-child">
@@ -113,7 +123,7 @@ function Header(props) {
                                 <div className='icon9'></div>
                             </div>
                             <div className="text-child">
-                                Sức khỏe doanh nghiệp
+                                <FormattedMessage id='banner.corporate-health' />
                             </div>
                         </div>
                     </div>
