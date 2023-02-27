@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import './styles/styles.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import IntlProviderWrapper from "./hoc/IntlProviderWrapper";
+import './styles/styles.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 import { Provider } from 'react-redux';
