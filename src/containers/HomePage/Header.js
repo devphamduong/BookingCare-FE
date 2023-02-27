@@ -1,10 +1,17 @@
 import { FormattedMessage } from 'react-intl';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { LANGUAGES } from '../../utils';
+import { changeLanguageApp } from '../../store/actions/appActions';
 import './Header.scss';
-import { useSelector } from 'react-redux';
 
 function Header(props) {
+    const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
+
+    const changeLanguage = (locale) => {
+        dispatch(changeLanguageApp(locale));
+    };
 
     return (
         <>
@@ -36,8 +43,8 @@ function Header(props) {
                         <Nav className='right-content'>
                             <div className='support'><i class="fas fa-question-circle"></i> <span><FormattedMessage id='home-header.support' /></span></div>
                             <div className='languages'>
-                                <div className='language-vi'>VN</div>
-                                <div className='language-en active'>EN</div>
+                                <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => changeLanguage(LANGUAGES.VI)}>VN</span></div>
+                                <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => changeLanguage(LANGUAGES.EN)}>EN</span></div>
                             </div>
                         </Nav>
                     </Navbar.Collapse>
