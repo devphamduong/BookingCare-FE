@@ -4,7 +4,7 @@
         height: 60px;
 
         .header-logo {
-            background         : url(../../assets/bookingcare-logo.svg);
+            background         : url(../../assets/header/bookingcare-logo.svg);
             background-position: center;
             background-repeat  : no-repeat;
             height             : 100%;
@@ -76,15 +76,15 @@
     }
 }
 
-$icons:(icon1: url(../../assets/icon-khamchuyenkhoa.png),
-    icon2: url(../../assets/icon-khamtuxa.png),
-    icon3: url(../../assets/icon-khamtongquat.png),
-    icon4: url(../../assets/icon-dichvuxetnghiem.png),
-    icon5: url(../../assets/icon-suckhoetinhthan.png),
-    icon6: url(../../assets/icon-khamnhakhoa.png),
-    icon7: url(../../assets/icon-phauthuat.jpg),
-    icon8: url(../../assets/icon-khamtainha.png),
-    icon9: url(../../assets/icon-suckhoedoanhnghiep.jpg),
+$icons:(icon1: url(../../assets/banner/icon-khamchuyenkhoa.png),
+    icon2: url(../../assets/banner/icon-khamtuxa.png),
+    icon3: url(../../assets/banner/icon-khamtongquat.png),
+    icon4: url(../../assets/banner/icon-dichvuxetnghiem.png),
+    icon5: url(../../assets/banner/icon-suckhoetinhthan.png),
+    icon6: url(../../assets/banner/icon-khamnhakhoa.png),
+    icon7: url(../../assets/banner/icon-phauthuat.jpg),
+    icon8: url(../../assets/banner/icon-khamtainha.png),
+    icon9: url(../../assets/banner/icon-suckhoedoanhnghiep.jpg),
 );
 
 @each $name,
@@ -100,7 +100,7 @@ $url in $icons {
 }
 
 .home-header-banner {
-    background         : url(../../assets/bookingcare-cover.jpg);
+    background         : url(../../assets/banner/bookingcare-cover.jpg);
     background-position: center;
     background-repeat  : no-repeat;
     background-size    : cover;
