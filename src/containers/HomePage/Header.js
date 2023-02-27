@@ -15,7 +15,7 @@ function Header(props) {
 
     return (
         <>
-            <Navbar bg="light" expand="lg" className='home-header-container'>
+            <Navbar style={{ backgroundColor: 'white' }} sticky='top' expand="lg" className='home-header-container'>
                 <Container>
                     <Navbar.Brand className='header-brand'>
                         <div className='header-logo'></div>
