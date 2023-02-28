@@ -4,10 +4,12 @@ import { adminMenu } from './menuApp';
 import { changeLanguageApp, processLogout } from '../../store/actions';
 import { LANGUAGES } from '../../utils';
 import './Header.scss';
+import { FormattedMessage } from 'react-intl';
 
 function Header(props) {
     const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
+    const userInfo = useSelector(state => state.user.userInfo);
 
     const changeLanguage = (locale) => {
         dispatch(changeLanguageApp(locale));
@@ -20,6 +22,7 @@ function Header(props) {
                 <Navigator menus={adminMenu} />
             </div>
             <div className='languages'>
+                <span className='welcome'><FormattedMessage id='home-header.welcome' />{userInfo && userInfo.firstName ? userInfo.firstName : ''}!</span>
                 <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => changeLanguage(LANGUAGES.VI)}>VN</span></div>
                 <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => changeLanguage(LANGUAGES.EN)}>EN</span></div>
                 {/* nút logout */}
