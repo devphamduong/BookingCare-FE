@@ -20,6 +20,27 @@ const adminReducer = (state = initialState, action) => {
         case actionTypes.FETCH_GENDER_FAIL:
             return {
                 ...state,
+                genders: []
+            };
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            return {
+                ...state,
+                positions: action.data
+            };
+        case actionTypes.FETCH_POSITION_FAIL:
+            return {
+                ...state,
+                positions: []
+            };
+        case actionTypes.FETCH_ROLE_SUCCESS:
+            return {
+                ...state,
+                roles: action.data
+            };
+        case actionTypes.FETCH_ROLE_FAIL:
+            return {
+                ...state,
+                roles: []
             };
         default:
             return state;

@@ -2,22 +2,58 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGender } from '../../../store/actions/adminActions';
+import { fetchGender, fetchPosition, fetchRole } from '../../../store/actions/adminActions';
 import { LANGUAGES } from '../../../utils';
+import Lightbox from 'react-image-lightbox';
+import './UserRedux.scss';
+import 'react-image-lightbox/style.css';
 
 function UserRedux(props) {
     const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
     const genders = useSelector(state => state.admin.genders);
+    const positions = useSelector(state => state.admin.positions);
+    const roles = useSelector(state => state.admin.roles);
     const [arrGender, setArrGender] = useState([]);
+    const [arrPosition, setArrPosition] = useState([]);
+    const [arrRole, setArrRole] = useState([]);
+    const [prevImg, setPrevImg] = useState();
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         dispatch(fetchGender());
+        dispatch(fetchPosition());
+        dispatch(fetchRole());
     }, []);
 
     useEffect(() => {
         setArrGender(genders);
     }, [genders]);
+
+    useEffect(() => {
+        setArrPosition(positions);
+    }, [positions]);
+
+    useEffect(() => {
+        setArrRole(roles);
+    }, [roles]);
+
+    const handleOnChangeImg = (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let objURL = URL.createObjectURL(file);
+            setPrevImg(objURL);
+        }
+    };
+
+    const openPreviewImg = () => {
+        if (prevImg) {
+            setIsOpen(true);
+        } else {
+            return;
+        }
+    };
 
     return (
         <div className='user-redux-container'>
@@ -65,22 +101,34 @@ function UserRedux(props) {
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.position' /></label>
                             <select class="form-select">
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {arrPosition && arrPosition.length > 0 &&
+                                    arrPosition.map((item, index) => {
+                                        return (
+                                            <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        );
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.role' /></label>
                             <select class="form-select">
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {arrRole && arrRole.length > 0 &&
+                                    arrRole.map((item, index) => {
+                                        return (
+                                            <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        );
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.image' /></label>
-                            <input type="text" className="form-control" />
+                            <div className='preview-img-container'>
+                                <input id='previewImg' type="file" hidden onChange={(event) => handleOnChangeImg(event)} />
+                                <label htmlFor='previewImg' className='label-upload'>Tải ảnh <i className="fas fa-upload"></i></label>
+                                <div className='preview-image my-2' style={{ backgroundImage: `url(${prevImg})` }} onClick={() => openPreviewImg()}></div>
+                            </div>
                         </div>
                         <div className='col-12 mt-3'>
                             <button type="submit" className="btn btn-primary"><FormattedMessage id='manage-user.btn-add' /></button>
@@ -88,6 +136,9 @@ function UserRedux(props) {
                     </div>
                 </div>
             </div>
+            {isOpen &&
+                <Lightbox mainSrc={prevImg} onCloseRequest={() => setIsOpen(false)} />
+            }
         </div>
     );
 }
