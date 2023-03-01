@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewUser, fetchGender, fetchPosition, fetchRole } from '../../../store/actions/adminActions';
+import { createNewUser, fetchAllUsers, fetchGender, fetchPosition, fetchRole } from '../../../store/actions/adminActions';
 import { LANGUAGES } from '../../../utils';
 import Lightbox from 'react-image-lightbox';
 import './UserRedux.scss';
 import 'react-image-lightbox/style.css';
 import { useImmer } from 'use-immer';
+import TableManageUser from './TableManageUser';
+import { toast } from 'react-toastify';
 
 function UserRedux(props) {
     const dispatch = useDispatch();
@@ -15,6 +17,7 @@ function UserRedux(props) {
     const genders = useSelector(state => state.admin.genders);
     const positions = useSelector(state => state.admin.positions);
     const roles = useSelector(state => state.admin.roles);
+    const users = useSelector(state => state.admin.users);
     const [arrGender, setArrGender] = useState([]);
     const [arrPosition, setArrPosition] = useState([]);
     const [arrRole, setArrRole] = useState([]);
@@ -60,6 +63,22 @@ function UserRedux(props) {
         });
     }, [roles]);
 
+    useEffect(() => {
+        setInputs({
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            address: '',
+            gender: '',
+            positionId: '',
+            roleId: '',
+            image: ''
+        });
+    }, [users]);
+
+
     const handleOnChangeImg = (event) => {
         let data = event.target.files;
         let file = data[0];
@@ -94,7 +113,7 @@ function UserRedux(props) {
         for (let i = 0; i < arrCheck.length; i++) {
             if (!inputs[arrCheck[i]]) {
                 isValid = false;
-                alert('Required "' + arrCheck[i] + '" parameter!');
+                toast.error('Required "' + arrCheck[i] + '" parameter!');
                 break;
             }
         }
@@ -105,6 +124,7 @@ function UserRedux(props) {
         let isValid = checkValidateInput();
         if (isValid) {
             dispatch(createNewUser(inputs));
+            dispatch(fetchAllUsers('ALL'));
         } else {
             return;
         }
@@ -185,8 +205,11 @@ function UserRedux(props) {
                                 <div className='preview-image my-2' style={{ backgroundImage: `url(${prevImg})` }} onClick={() => openPreviewImg()}></div>
                             </div>
                         </div>
-                        <div className='col-12 mt-3'>
+                        <div className='col-12 my-3'>
                             <button type="submit" className="btn btn-primary" onClick={() => createUser()}><FormattedMessage id='manage-user.btn-add' /></button>
+                        </div>
+                        <div className='col-12 mb-5'>
+                            <TableManageUser />
                         </div>
                     </div>
                 </div>

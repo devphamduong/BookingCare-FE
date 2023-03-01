@@ -3,7 +3,8 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     genders: [],
     positions: [],
-    roles: []
+    roles: [],
+    users: []
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -41,6 +42,16 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 roles: []
+            };
+        case actionTypes.FETCH_ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                users: action.data
+            };
+        case actionTypes.FETCH_ALL_USERS_FAIL:
+            return {
+                ...state,
+                users: []
             };
         default:
             return state;
