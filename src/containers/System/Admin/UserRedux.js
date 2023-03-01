@@ -1,24 +1,23 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { getAllCode } from '../../../services/userService';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGender } from '../../../store/actions/adminActions';
 import { LANGUAGES } from '../../../utils';
 
 function UserRedux(props) {
+    const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
+    const genders = useSelector(state => state.admin.genders);
     const [arrGender, setArrGender] = useState([]);
 
     useEffect(() => {
-        fetchAllCode('gender');
+        dispatch(fetchGender());
     }, []);
 
-    const fetchAllCode = async (type) => {
-        let res = await getAllCode(type);
-        if (res && res.errCode === 0) {
-            setArrGender(res.data);
-        }
-    };
+    useEffect(() => {
+        setArrGender(genders);
+    }, [genders]);
 
     return (
         <div className='user-redux-container'>
