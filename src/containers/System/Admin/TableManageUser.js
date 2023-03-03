@@ -18,7 +18,7 @@ function TableManageUser(props) {
     }, [users]);
 
     const handleEditUser = (user) => {
-
+        props.handleUpdateUser(user);
     };
 
     const handleDeleteUser = async (user) => {

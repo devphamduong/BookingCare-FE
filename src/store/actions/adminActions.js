@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { createUser, deleteUser, getAllCode, getAllUsers } from '../../services/userService';
+import { createUser, deleteUser, getAllCode, getAllUsers, updateUser } from '../../services/userService';
 import actionTypes from './actionTypes';
 
 export const fetchGender = () => {
@@ -96,6 +96,32 @@ export const createUserSuccess = () => ({
 });
 export const createUserFail = () => ({
     type: actionTypes.CREATE_USER_FAIL
+});
+
+export const updateAUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateUser(data);
+            if (res && res.errCode === 0) {
+                toast.success('Updated user successfully!');
+                dispatch(updateUserSuccess());
+                dispatch(fetchAllUsers());
+            } else {
+                toast.success('Failed to update user!');
+                dispatch(updateUserFail());
+            }
+        } catch (error) {
+            toast.success('Failed to update user!');
+            dispatch(updateUserFail());
+            console.log(error);
+        }
+    };
+};
+export const updateUserSuccess = () => ({
+    type: actionTypes.UPDATE_USER_SUCCESS
+});
+export const updateUserFail = () => ({
+    type: actionTypes.UPDATE_USER_FAIL
 });
 
 export const deleteAUser = (id) => {

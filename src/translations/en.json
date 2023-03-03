@@ -52,6 +52,7 @@
         "position": "Position",
         "role": "Role",
         "image": "Avatar",
-        "btn-add": "Add user"
+        "btn-add": "Add user",
+        "btn-edit": "Save changes"
     }
 }

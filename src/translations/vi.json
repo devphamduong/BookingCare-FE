@@ -52,6 +52,7 @@
         "position": "Chức danh",
         "role": "Vai trò",
         "image": "Ảnh đại diện",
-        "btn-add": "Thêm người dùng"
+        "btn-add": "Thêm người dùng",
+        "btn-edit": "Lưu thay đổi"
     }
 }

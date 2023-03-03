@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewUser, fetchAllUsers, fetchGender, fetchPosition, fetchRole } from '../../../store/actions/adminActions';
-import { LANGUAGES } from '../../../utils';
+import { createNewUser, fetchAllUsers, fetchGender, fetchPosition, fetchRole, updateAUser } from '../../../store/actions/adminActions';
+import { CRUD_ACTIONS, LANGUAGES } from '../../../utils';
 import Lightbox from 'react-image-lightbox';
 import './UserRedux.scss';
 import 'react-image-lightbox/style.css';
@@ -23,7 +23,9 @@ function UserRedux(props) {
     const [arrRole, setArrRole] = useState([]);
     const [prevImg, setPrevImg] = useState();
     const [isOpen, setIsOpen] = useState(false);
+    const [action, setAction] = useState('');
     const [inputs, setInputs] = useImmer({
+        id: '',
         email: '',
         password: '',
         firstName: '',
@@ -71,11 +73,12 @@ function UserRedux(props) {
             lastName: '',
             phoneNumber: '',
             address: '',
-            gender: '',
-            positionId: '',
-            roleId: '',
+            gender: genders && genders.length > 0 ? genders[0].key : '',
+            positionId: positions && positions.length > 0 ? positions[0].key : '',
+            roleId: roles && roles.length > 0 ? roles[0].key : '',
             image: ''
         });
+        setAction(CRUD_ACTIONS.CREATE);
     }, [users]);
 
 
@@ -120,14 +123,35 @@ function UserRedux(props) {
         return isValid;
     };
 
-    const createUser = () => {
+    const saveUser = () => {
         let isValid = checkValidateInput();
         if (isValid) {
-            dispatch(createNewUser(inputs));
+            if (action === CRUD_ACTIONS.CREATE) {
+                dispatch(createNewUser(inputs));
+            } else if (action === CRUD_ACTIONS.EDIT) {
+                dispatch(updateAUser(inputs));
+            }
             dispatch(fetchAllUsers('ALL'));
         } else {
             return;
         }
+    };
+
+    const handleUpdateUser = (user) => {
+        setInputs({
+            id: user.id,
+            email: user.email,
+            password: 'PRIVATE',
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phoneNumber: user.phoneNumber,
+            address: user.address,
+            gender: user.gender,
+            positionId: user.positionId,
+            roleId: user.roleId,
+            image: user.image
+        });
+        setAction(CRUD_ACTIONS.EDIT);
     };
 
     return (
@@ -139,11 +163,11 @@ function UserRedux(props) {
                         <div className='col-12 my-3'><FormattedMessage id='manage-user.add' /></div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.email' /></label>
-                            <input type="email" className="form-control" placeholder="Email" value={inputs.email} onChange={(event) => onChangeInput(event, 'email')} />
+                            <input type="email" disabled={action === CRUD_ACTIONS.EDIT} className="form-control" placeholder="Email" value={inputs.email} onChange={(event) => onChangeInput(event, 'email')} />
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.password' /></label>
-                            <input type="password" className="form-control" placeholder="Password" value={inputs.password} onChange={(event) => onChangeInput(event, 'password')} />
+                            <input type="password" disabled={action === CRUD_ACTIONS.EDIT} className="form-control" placeholder="Password" value={inputs.password} onChange={(event) => onChangeInput(event, 'password')} />
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.first-name' /></label>
@@ -163,7 +187,7 @@ function UserRedux(props) {
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.gender' /></label>
-                            <select class="form-select" onChange={(event) => onChangeInput(event, 'gender')}>
+                            <select class="form-select" value={inputs.gender} onChange={(event) => onChangeInput(event, 'gender')}>
                                 {arrGender && arrGender.length > 0 &&
                                     arrGender.map((item, index) => {
                                         return (
@@ -175,7 +199,7 @@ function UserRedux(props) {
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.position' /></label>
-                            <select class="form-select" onChange={(event) => onChangeInput(event, 'positionId')}>
+                            <select class="form-select" value={inputs.positionId} onChange={(event) => onChangeInput(event, 'positionId')}>
                                 {arrPosition && arrPosition.length > 0 &&
                                     arrPosition.map((item, index) => {
                                         return (
@@ -187,7 +211,7 @@ function UserRedux(props) {
                         </div>
                         <div className="form-group col-3">
                             <label><FormattedMessage id='manage-user.role' /></label>
-                            <select class="form-select" onChange={(event) => onChangeInput(event, 'roleId')}>
+                            <select class="form-select" value={inputs.roleId} onChange={(event) => onChangeInput(event, 'roleId')}>
                                 {arrRole && arrRole.length > 0 &&
                                     arrRole.map((item, index) => {
                                         return (
@@ -206,10 +230,13 @@ function UserRedux(props) {
                             </div>
                         </div>
                         <div className='col-12 my-3'>
-                            <button type="submit" className="btn btn-primary" onClick={() => createUser()}><FormattedMessage id='manage-user.btn-add' /></button>
+                            {action === CRUD_ACTIONS.EDIT
+                                ? <button type="submit" className="btn btn-warning" onClick={() => saveUser()}><FormattedMessage id='manage-user.btn-edit' /></button>
+                                : <button type="submit" className="btn btn-primary" onClick={() => saveUser()}><FormattedMessage id='manage-user.btn-add' /></button>
+                            }
                         </div>
                         <div className='col-12 mb-5'>
-                            <TableManageUser />
+                            <TableManageUser action={action} handleUpdateUser={handleUpdateUser} />
                         </div>
                     </div>
                 </div>
