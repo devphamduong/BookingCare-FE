@@ -47,21 +47,21 @@ function UserRedux(props) {
     useEffect(() => {
         setArrGender(genders);
         setInputs(draft => {
-            draft['gender'] = genders && genders.length > 0 ? genders[0].key : '';
+            draft['gender'] = genders && genders.length > 0 ? genders[0].keyMap : '';
         });
     }, [genders]);
 
     useEffect(() => {
         setArrPosition(positions);
         setInputs(draft => {
-            draft['positionId'] = positions && positions.length > 0 ? positions[0].key : '';
+            draft['positionId'] = positions && positions.length > 0 ? positions[0].keyMap : '';
         });
     }, [positions]);
 
     useEffect(() => {
         setArrRole(roles);
         setInputs(draft => {
-            draft['roleId'] = roles && roles.length > 0 ? roles[0].key : '';
+            draft['roleId'] = roles && roles.length > 0 ? roles[0].keyMap : '';
         });
     }, [roles]);
 
@@ -73,9 +73,9 @@ function UserRedux(props) {
             lastName: '',
             phoneNumber: '',
             address: '',
-            gender: genders && genders.length > 0 ? genders[0].key : '',
-            positionId: positions && positions.length > 0 ? positions[0].key : '',
-            roleId: roles && roles.length > 0 ? roles[0].key : '',
+            gender: genders && genders.length > 0 ? genders[0].keyMap : '',
+            positionId: positions && positions.length > 0 ? positions[0].keyMap : '',
+            roleId: roles && roles.length > 0 ? roles[0].keyMap : '',
             image: '',
         });
         setPrevImg('');
@@ -105,7 +105,7 @@ function UserRedux(props) {
     };
 
     const onChangeInput = (event, id) => {
-        if (event && event.target && event.target.value) {
+        if (event && event.target) {
             setInputs(draft => {
                 draft[id] = event.target.value;
             });
@@ -198,7 +198,7 @@ function UserRedux(props) {
                                 {arrGender && arrGender.length > 0 &&
                                     arrGender.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                            <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                         );
                                     })
                                 }
@@ -210,7 +210,7 @@ function UserRedux(props) {
                                 {arrPosition && arrPosition.length > 0 &&
                                     arrPosition.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                            <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                         );
                                     })
                                 }
@@ -222,7 +222,7 @@ function UserRedux(props) {
                                 {arrRole && arrRole.length > 0 &&
                                     arrRole.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                            <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                         );
                                     })
                                 }
