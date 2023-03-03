@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { createNewUser, fetchAllUsers, fetchGender, fetchPosition, fetchRole, updateAUser } from '../../../store/actions/adminActions';
-import { CRUD_ACTIONS, LANGUAGES } from '../../../utils';
+import { CRUD_ACTIONS, LANGUAGES, CommonUtils } from '../../../utils';
 import Lightbox from 'react-image-lightbox';
 import './UserRedux.scss';
 import 'react-image-lightbox/style.css';
@@ -76,20 +76,22 @@ function UserRedux(props) {
             gender: genders && genders.length > 0 ? genders[0].key : '',
             positionId: positions && positions.length > 0 ? positions[0].key : '',
             roleId: roles && roles.length > 0 ? roles[0].key : '',
-            image: ''
+            image: '',
         });
+        setPrevImg('');
         setAction(CRUD_ACTIONS.CREATE);
     }, [users]);
 
 
-    const handleOnChangeImg = (event) => {
+    const handleOnChangeImg = async (event) => {
         let data = event.target.files;
         let file = data[0];
         if (file) {
+            let base64 = await CommonUtils.toBase64(file);
             let objURL = URL.createObjectURL(file);
             setPrevImg(objURL);
             setInputs(draft => {
-                draft['image'] = file;
+                draft['image'] = base64;
             });
         }
     };
@@ -138,6 +140,10 @@ function UserRedux(props) {
     };
 
     const handleUpdateUser = (user) => {
+        let imageBase64 = '';
+        if (user.image) {
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary');
+        }
         setInputs({
             id: user.id,
             email: user.email,
@@ -149,8 +155,9 @@ function UserRedux(props) {
             gender: user.gender,
             positionId: user.positionId,
             roleId: user.roleId,
-            image: user.image
+            image: ''
         });
+        setPrevImg(imageBase64);
         setAction(CRUD_ACTIONS.EDIT);
     };
 
@@ -236,7 +243,7 @@ function UserRedux(props) {
                             }
                         </div>
                         <div className='col-12 mb-5'>
-                            <TableManageUser action={action} handleUpdateUser={handleUpdateUser} />
+                            <TableManageUser handleUpdateUser={handleUpdateUser} />
                         </div>
                     </div>
                 </div>
