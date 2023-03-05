@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 import './Specialty.scss';
 
@@ -8,8 +9,8 @@ function Specialty(props) {
         <div className='section-share section-specialty'>
             <div className='section-container'>
                 <div className="section-header">
-                    <span className="title-section">Chuyên khoa phổ biến</span>
-                    <button className="btn-section">Xem thêm</button>
+                    <span className="title-section"><FormattedMessage id='homepage.specialty' /></span>
+                    <button className="btn-section"><FormattedMessage id='homepage.btn-more' /></button>
                 </div>
                 <div className="section-body">
                     <Slider {...settings}>

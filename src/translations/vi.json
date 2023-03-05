@@ -54,5 +54,12 @@
         "image": "Ảnh đại diện",
         "btn-add": "Thêm người dùng",
         "btn-edit": "Lưu thay đổi"
+    },
+    "homepage": {
+        "btn-more": "Xem thêm",
+        "out-standing-doctor": "Bác sĩ nổi bật tuần qua",
+        "handbook": "Cẩm nang",
+        "medical-facility": "Cơ sở y tế nổi bật",
+        "specialty": "Chuyên khoa phổ biến"
     }
 }

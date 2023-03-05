@@ -54,5 +54,12 @@
         "image": "Avatar",
         "btn-add": "Add user",
         "btn-edit": "Save changes"
+    },
+    "homepage": {
+        "btn-more": "More Infor",
+        "out-standing-doctor": "Famous doctors last week",
+        "handbook": "Handbooks",
+        "medical-facility": "Medical facilities",
+        "specialty": "Specialties"
     }
 }

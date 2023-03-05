@@ -4,6 +4,7 @@ import { fetchTopDoctor } from '../../../store/actions';
 import Slider from "react-slick";
 import { useState } from "react";
 import { LANGUAGES } from '../../../utils/constant';
+import { FormattedMessage } from "react-intl";
 
 function OutStandingDoctor(props) {
     const dispatch = useDispatch();
@@ -24,8 +25,8 @@ function OutStandingDoctor(props) {
         <div className='section-share section-outstanding-doctor'>
             <div className='section-container'>
                 <div className="section-header">
-                    <span className="title-section">Bác sĩ nổi bật tuần qua</span>
-                    <button className="btn-section">Xem thêm</button>
+                    <span className="title-section"><FormattedMessage id='homepage.out-standing-doctor' /></span>
+                    <button className="btn-section"><FormattedMessage id='homepage.btn-more' /></button>
                 </div>
                 <div className="section-body">
                     <Slider {...settings}>

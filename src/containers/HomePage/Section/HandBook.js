@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 
 function HandBook(props) {
@@ -7,8 +8,8 @@ function HandBook(props) {
         <div className='section-share section-handbook'>
             <div className='section-container'>
                 <div className="section-header">
-                    <span className="title-section">Cẩm nang</span>
-                    <button className="btn-section">Xem thêm</button>
+                    <span className="title-section"><FormattedMessage id='homepage.handbook' /></span>
+                    <button className="btn-section"><FormattedMessage id='homepage.btn-more' /></button>
                 </div>
                 <div className="section-body">
                     <Slider {...settings}>
