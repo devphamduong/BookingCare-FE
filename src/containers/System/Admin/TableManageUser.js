@@ -2,13 +2,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAUser, fetchAllUsers } from '../../../store/actions/adminActions';
-import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
-// import style manually
-import 'react-markdown-editor-lite/lib/index.css';
-import './TableManageUser.scss';
-
-const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 function TableManageUser(props) {
     const dispatch = useDispatch();
@@ -33,10 +26,6 @@ function TableManageUser(props) {
         } else {
             return;
         }
-    };
-
-    const handleEditorChange = ({ html, text }) => {
-        console.log('handleEditorChange', html, text);
     };
 
     return (
@@ -72,7 +61,6 @@ function TableManageUser(props) {
                     </table>
                 </div>
             </div>
-            <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={() => handleEditorChange} />
         </>
     );
 }
