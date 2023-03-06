@@ -124,11 +124,6 @@
 }
 
 .section-outstanding-doctor {
-    .outer-bg {
-        display        : flex;
-        justify-content: center;
-        margin-bottom  : 10px;
-    }
 
     .section-customize {
         padding: 5px;
@@ -136,6 +131,21 @@
         .customize-border {
             border : 1px solid orange;
             padding: 20px;
+
+            .outer-bg {
+                display        : flex;
+                justify-content: center;
+                margin-bottom  : 10px;
+
+                .bg-image {
+                    cursor: pointer;
+
+                    &:hover>.title1 {
+                        color: #e23de2;
+                    }
+                }
+            }
+
         }
     }
 }

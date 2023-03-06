@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { useState } from "react";
 import { LANGUAGES } from '../../../utils/constant';
 import { FormattedMessage } from "react-intl";
+import { withRouter } from 'react-router';
 
 function OutStandingDoctor(props) {
     const dispatch = useDispatch();
@@ -20,6 +21,12 @@ function OutStandingDoctor(props) {
     useEffect(() => {
         setArrDoctors(topDoctors);
     }, [topDoctors]);
+
+    const viewDetailDoctor = (doctor) => {
+        if (doctor && doctor.id) {
+            props.history.push(`/detail-doctor/${doctor.id}`);
+        }
+    };
 
     return (
         <div className='section-share section-outstanding-doctor'>
@@ -44,10 +51,10 @@ function OutStandingDoctor(props) {
                                     <div className="section-customize" key={`doctor-${index}`}>
                                         <div className="customize-border">
                                             <div className="outer-bg">
-                                                <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} />
+                                                <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} onClick={() => viewDetailDoctor(item)} />
                                             </div>
                                             <div className="position text-center">
-                                                <div>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
+                                                <div className="title1" onClick={() => viewDetailDoctor(item)}>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
                                                 <div>Cơ Xương khớp</div>
                                             </div>
                                         </div>
@@ -62,4 +69,4 @@ function OutStandingDoctor(props) {
     );
 }
 
-export default OutStandingDoctor;
+export default withRouter(OutStandingDoctor);

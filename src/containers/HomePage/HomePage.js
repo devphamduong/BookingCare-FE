@@ -20,7 +20,7 @@ function HomePage(props) {
 
     return (
         <div>
-            <Header />
+            <Header isShowBanner={true} />
             <Specialty settings={settings} />
             <MedicalFacility settings={settings} />
             <OutStandingDoctor settings={settings} />

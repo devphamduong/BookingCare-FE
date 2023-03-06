@@ -50,92 +50,94 @@ function Header(props) {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className='home-header-banner'>
-                <div className="home-header-banner-sub1">
-                    <div className='title1'><FormattedMessage id='banner.title1' /></div>
-                    <div className='title2'><FormattedMessage id='banner.title2' /></div>
-                    <div className='search'>
-                        <i className="fas fa-search"></i>
-                        <input type={'text'} placeholder={<FormattedMessage id='banner.search-medical-specialty' />} />
-                    </div>
-                </div>
-                <div className="home-header-banner-sub2">
-                    <div className='options'>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon1'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.specialist-examination' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon2'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.remote-examination' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon3'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.general-examination' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon4'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.medical-test' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon5'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.mental-health' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon6'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.dental-examination' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon7'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.surgery-package' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon8'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.medical-product' />
-                            </div>
-                        </div>
-                        <div className="option-child">
-                            <div className="icon-child">
-                                <div className='icon9'></div>
-                            </div>
-                            <div className="text-child">
-                                <FormattedMessage id='banner.corporate-health' />
-                            </div>
+            {props.isShowBanner &&
+                <div className='home-header-banner'>
+                    <div className="home-header-banner-sub1">
+                        <div className='title1'><FormattedMessage id='banner.title1' /></div>
+                        <div className='title2'><FormattedMessage id='banner.title2' /></div>
+                        <div className='search'>
+                            <i className="fas fa-search"></i>
+                            <input type={'text'} placeholder={<FormattedMessage id='banner.search-medical-specialty' />} />
                         </div>
                     </div>
+                    <div className="home-header-banner-sub2">
+                        <div className='options'>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon1'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.specialist-examination' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon2'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.remote-examination' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon3'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.general-examination' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon4'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.medical-test' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon5'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.mental-health' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon6'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.dental-examination' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon7'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.surgery-package' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon8'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.medical-product' />
+                                </div>
+                            </div>
+                            <div className="option-child">
+                                <div className="icon-child">
+                                    <div className='icon9'></div>
+                                </div>
+                                <div className="text-child">
+                                    <FormattedMessage id='banner.corporate-health' />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            }
         </>
     );
 }

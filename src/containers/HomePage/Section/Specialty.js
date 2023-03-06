@@ -1,6 +1,5 @@
 import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
-import './Specialty.scss';
 
 function Specialty(props) {
     const { settings } = props;
