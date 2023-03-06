@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { createUser, deleteUser, getAllCode, getAllUsers, getTopDoctor, updateUser } from '../../services/userService';
+import { createUser, deleteUser, getAllCode, getAllDoctors, getAllUsers, getTopDoctor, saveInforDoctor, updateUser } from '../../services/userService';
 import actionTypes from './actionTypes';
 
 export const fetchGender = () => {
@@ -197,3 +197,52 @@ export const fetchTopDoctorSuccess = (data) => ({
 export const fetchTopDoctorFail = () => ({
     type: actionTypes.FETCH_TOP_DOCTOR_FAIL
 });
+
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data));
+            } else {
+                dispatch(fetchAllDoctorsFail());
+            }
+        } catch (error) {
+            dispatch(fetchAllDoctorsFail());
+            console.log(error);
+        }
+    };
+};
+export const fetchAllDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+    data
+});
+export const fetchAllDoctorsFail = () => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_FAIL
+});
+
+export const saveInfoDoctor = (data) => {
+    return async (dispatch, getState) => {
+        let res = '';
+        try {
+            res = await saveInforDoctor(data);
+            if (res && res.errCode === 0) {
+                toast.success(res.message);
+                dispatch({
+                    type: actionTypes.SAVE_INFOR_DOCTOR_SUCCESS
+                });
+            } else {
+                toast.error(res.errMessage);
+                dispatch({
+                    type: actionTypes.SAVE_INFOR_DOCTOR_FAIL
+                });
+            }
+        } catch (error) {
+            toast.error(res.errMessage);
+            dispatch({
+                type: actionTypes.SAVE_INFOR_DOCTOR_FAIL
+            });
+            console.log(error);
+        }
+    };
+};
