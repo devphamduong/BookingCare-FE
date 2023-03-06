@@ -23,7 +23,7 @@ function OutStandingDoctor(props) {
     }, [topDoctors]);
 
     const viewDetailDoctor = (doctor) => {
-        if (doctor && doctor.id) {
+        if (doctor && doctor.id && props.history) {
             props.history.push(`/detail-doctor/${doctor.id}`);
         }
     };

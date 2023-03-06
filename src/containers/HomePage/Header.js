@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LANGUAGES } from '../../utils';
 import { changeLanguageApp } from '../../store/actions/appActions';
+import { withRouter } from 'react-router';
 import './Header.scss';
 
 function Header(props) {
@@ -13,12 +14,18 @@ function Header(props) {
         dispatch(changeLanguageApp(locale));
     };
 
+    const returnToHome = () => {
+        if (props.history) {
+            props.history.push(`/home`);
+        }
+    };
+
     return (
         <>
             <Navbar style={{ backgroundColor: 'white' }} sticky='top' expand="lg" className='home-header-container'>
                 <Container>
                     <Navbar.Brand className='header-brand'>
-                        <div className='header-logo'></div>
+                        <div className='header-logo' onClick={() => returnToHome()}></div>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className='home-header-content'>
@@ -142,4 +149,4 @@ function Header(props) {
     );
 }
 
-export default Header;
+export default withRouter(Header);

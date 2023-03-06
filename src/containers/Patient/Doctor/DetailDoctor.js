@@ -25,14 +25,13 @@ function DetailDoctor(props) {
         nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
         nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
     }
+
     return (
         <>
             <Header isShowBanner={false} />
-            <div className='detail-doctor-container container'>
+            <div className='detail-doctor-container'>
                 <div className='intro-doctor'>
-                    <div className='content-left' style={{ backgroundImage: `url(${detailDoctor && detailDoctor.image ? detailDoctor.image : ''})` }}>
-
-                    </div>
+                    <div className='content-left' style={{ backgroundImage: `url(${detailDoctor && detailDoctor.image ? detailDoctor.image : ''})` }}></div>
                     <div className='content-right'>
                         <div className='up'>
                             {language === LANGUAGES.VI ? nameVi : nameEn}

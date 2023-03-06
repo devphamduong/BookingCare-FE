@@ -9,7 +9,8 @@ import Select from 'react-select';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllDoctors, saveInfoDoctor } from '../../../store/actions/adminActions';
-import { LANGUAGES } from '../../../utils/constant';
+import { CRUD_ACTIONS, LANGUAGES } from '../../../utils/constant';
+import { getDetailDoctorById } from '../../../services/userService';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -22,6 +23,7 @@ function ManageDoctor(props) {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [description, setDescription] = useState('');
     const [listDoctors, setListDoctors] = useState([]);
+    const [hasData, setHasData] = useState(false);
 
     useEffect(() => {
         dispatch(fetchAllDoctors());
@@ -62,8 +64,21 @@ function ManageDoctor(props) {
             contentHTML,
             contentMarkdown,
             description,
-            doctorId: selectedDoctor.value
+            doctorId: selectedDoctor.value,
+            action: hasData ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE
         }));
+    };
+
+    const handleChangeSelect = async (selectedOption) => {
+        setSelectedDoctor(selectedOption);
+        let res = await getDetailDoctorById(selectedOption.value);
+        if (res && res.errCode === 0 && res.data && res.data.Markdown) {
+            let markdown = res.data.Markdown;
+            setContentMarkdown(markdown.contentMarkdown ? markdown.contentMarkdown : '');
+            setContentHTML(markdown.contentHTML ? markdown.contentHTML : '');
+            setDescription(markdown.description ? markdown.description : '');
+            setHasData(markdown.contentMarkdown && markdown.contentHTML && markdown.description ? true : false);
+        }
     };
 
     return (
@@ -74,19 +89,19 @@ function ManageDoctor(props) {
                     <label>Chọn bác sĩ</label>
                     <Select
                         defaultValue={selectedDoctor}
-                        onChange={setSelectedDoctor}
+                        onChange={handleChangeSelect}
                         options={listDoctors}
                     />
                 </div>
                 <div className='content-right form-group col-6'>
                     <label>Thông tin giới thiệu</label>
-                    <textarea rows={4} className='form-control' onChange={(event) => setDescription(event.target.value)}></textarea>
+                    <textarea rows={4} className='form-control' value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
                 </div>
             </div>
             <div className='manage-doctor-editor'>
-                <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
+                <MdEditor style={{ height: '500px' }} value={contentMarkdown} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
             </div>
-            <button className='btn btn-primary my-3' onClick={() => handleSaveContentMarkdown()}>Lưu thông tin</button>
+            <button className={hasData ? 'btn btn-warning my-3' : 'btn btn-primary my-3'} onClick={() => handleSaveContentMarkdown()}>{hasData ? 'Lưu thay đổi' : 'Tạo thông tin'}</button>
         </div>
     );
 }
