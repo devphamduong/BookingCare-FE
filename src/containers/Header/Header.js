@@ -1,25 +1,41 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Navigator from '../../components/Navigator';
-import { adminMenu } from './menuApp';
+import { adminMenu, doctorMenu } from './menuApp';
 import { changeLanguageApp, processLogout } from '../../store/actions';
-import { LANGUAGES } from '../../utils';
+import { LANGUAGES, USER_ROLE } from '../../utils';
 import './Header.scss';
 import { FormattedMessage } from 'react-intl';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
 
 function Header(props) {
     const dispatch = useDispatch();
     const language = useSelector(state => state.app.language);
     const userInfo = useSelector(state => state.user.userInfo);
+    const [menuApp, setMenuApp] = useState([]);
 
     const changeLanguage = (locale) => {
         dispatch(changeLanguageApp(locale));
     };
 
+    useEffect(() => {
+        if (userInfo && !_.isEmpty(userInfo)) {
+            let role = userInfo.roleId;
+            let menu = [];
+            if (role === USER_ROLE.ADMIN) {
+                menu = adminMenu;
+            } else if (role === USER_ROLE.DOCTOR) {
+                menu = doctorMenu;
+            }
+            setMenuApp(menu);
+        }
+    }, []);
+
     return (
         <div className="header-container">
             {/* thanh navigator */}
             <div className="header-tabs-container">
-                <Navigator menus={adminMenu} />
+                <Navigator menus={menuApp} />
             </div>
             <div className='languages'>
                 <span className='welcome'><FormattedMessage id='home-header.welcome' />{userInfo && userInfo.firstName ? userInfo.firstName : ''}!</span>
