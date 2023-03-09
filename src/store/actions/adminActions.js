@@ -246,3 +246,30 @@ export const saveInfoDoctor = (data) => {
         }
     };
 };
+
+export const fetchSchedule = () => {
+    return async (dispatch, getState) => {
+        let res = '';
+        try {
+            res = await getAllCode('TIME');
+            if (res && res.errCode === 0) {
+                toast.success(res.message);
+                dispatch({
+                    type: actionTypes.FETCH_SCHEDULE_SUCCESS,
+                    data: res.data
+                });
+            } else {
+                toast.error(res.errMessage);
+                dispatch({
+                    type: actionTypes.FETCH_SCHEDULE_FAIL
+                });
+            }
+        } catch (error) {
+            toast.error(res.errMessage);
+            dispatch({
+                type: actionTypes.FETCH_SCHEDULE_FAIL
+            });
+            console.log(error);
+        }
+    };
+};

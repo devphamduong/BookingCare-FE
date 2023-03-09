@@ -1,0 +1,15 @@
+.manage-schedule-container {
+    .pick-hour-container {
+        padding-top    : 20px;
+        display        : flex;
+        gap            : 20px;
+        flex-wrap      : wrap;
+        align-items    : center;
+        justify-content: center;
+
+        .btn-schedule {
+            border     : 1px solid red;
+            padding-top: 5px 10px;
+        }
+    }
+}

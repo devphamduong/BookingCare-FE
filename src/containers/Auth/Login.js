@@ -1,4 +1,3 @@
-import * as actions from "../../store/actions";
 import { FormattedMessage } from 'react-intl';
 import './Login.scss';
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +27,12 @@ function Login(props) {
         }
     };
 
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+            handleUserLogin();
+        }
+    };
+
     return (
         <>
             <div className="login-background">
@@ -41,7 +46,7 @@ function Login(props) {
                         <div className="col-12 form-group login-input">
                             <label>Password</label>
                             <div className="custom-input-password">
-                                <input type={!isShowPassword ? "password" : "text"} className="form-control" placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} />
+                                <input type={!isShowPassword ? "password" : "text"} className="form-control" placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} onKeyDown={(event) => handleKeyDown(event)} />
                                 {password &&
                                     <i className={!isShowPassword ? "fas fa-eye" : "fas fa-eye-slash"} onClick={() => setIsShowPassword(!isShowPassword)}></i>
                                 }

@@ -4,6 +4,7 @@ const initialState = {
     genders: [],
     positions: [],
     roles: [],
+    times: [],
     users: [],
     topDoctors: [],
     allDoctors: []
@@ -74,6 +75,16 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allDoctors: []
+            };
+        case actionTypes.FETCH_SCHEDULE_SUCCESS:
+            return {
+                ...state,
+                times: action.data
+            };
+        case actionTypes.FETCH_SCHEDULE_FAIL:
+            return {
+                ...state,
+                times: []
             };
         default:
             return state;

@@ -40,7 +40,13 @@
             "manage-handbook": "Manage Handbooks"
         },
         "doctor": {
-            "manage-schedule": "Manage Doctor's schedule"
+            "manage-schedule": "Manage doctor's schedule",
+            "title": "Manage doctor's examination plan",
+            "title-doctor": "Doctor",
+            "title-date": "Date",
+            "choose-doctor": "Choose a doctor",
+            "btn-save": "Save infor",
+            "btn-update": "Save changes"
         }
     },
     "manage-user": {
