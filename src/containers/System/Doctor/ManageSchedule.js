@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import _ from 'lodash';
 import moment from 'moment';
 import { dateFormat } from '../../../utils';
+import { bulkCreateSchedule } from '../../../services/userService';
 
 function ManageSchedule() {
     const dispatch = useDispatch();
@@ -84,7 +85,7 @@ function ManageSchedule() {
         }
     };
 
-    const handleSaveSchedule = () => {
+    const handleSaveSchedule = async () => {
         let result = [];
         if (!selectedDoctor && _.isEmpty(selectedDoctor)) {
             toast.error('The doctor has not been chosen!');
@@ -93,21 +94,30 @@ function ManageSchedule() {
             toast.error('The date has not been chosen!');
             return;
         }
-        let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+        // let formattedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+        let formattedDate = new Date(currentDate).getTime();
         if (rangeTime && rangeTime.length > 0) {
             let selectedTimes = rangeTime.filter(item => item.isSelected === true);
             if (selectedTimes && selectedTimes.length > 0) {
                 selectedTimes.map(item => {
                     let obj = {};
                     obj.doctorId = selectedDoctor.value;
-                    obj.date = formatedDate;
-                    obj.time = item.keyMap;
+                    obj.date = formattedDate;
+                    obj.timeType = item.keyMap;
                     result.push(obj);
                 });
             } else {
                 toast.error('The time has not been chosen!');
                 return;
             }
+        }
+        let res = await bulkCreateSchedule({
+            arrSchedule: result,
+            doctorId: selectedDoctor.value,
+            formattedDate
+        });
+        if (res && res.errCode === 0) {
+            toast.success(res.message);
         }
     };
 
