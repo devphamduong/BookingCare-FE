@@ -139,7 +139,7 @@ function ManageSchedule() {
                     </div>
                     <div className='col-6'>
                         <label><FormattedMessage id='menu.doctor.title-date' /></label>
-                        <DatePicker className='form-control' value={currentDate} minDate={new Date()} onChange={handleOnChangeDatePicker} />
+                        <DatePicker className='form-control' value={currentDate} minDate={new Date().setHours(0, 0, 0, 0)} onChange={handleOnChangeDatePicker} />
                     </div>
                     <div className='col-12 pick-hour-container'>
                         {rangeTime && rangeTime.length > 0 &&

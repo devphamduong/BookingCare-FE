@@ -5,6 +5,7 @@ import Header from '../../HomePage/Header';
 import { LANGUAGES } from '../../../utils/constant';
 import './DetailDoctor.scss';
 import { useSelector } from 'react-redux';
+import DoctorSchedule from './DoctorSchedule';
 
 function DetailDoctor(props) {
     const [detailDoctor, setDetailDoctor] = useState({});
@@ -44,7 +45,12 @@ function DetailDoctor(props) {
                     </div>
                 </div>
                 <div className='schedule-doctor'>
+                    <div className='content-left'>
+                        <DoctorSchedule doctorId={detailDoctor && detailDoctor.id ? detailDoctor.id : -1} />
+                    </div>
+                    <div className='content-right'>
 
+                    </div>
                 </div>
                 <div className='detail-infor-doctor'>
                     {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML &&
