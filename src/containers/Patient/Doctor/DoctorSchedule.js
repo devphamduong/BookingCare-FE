@@ -19,10 +19,12 @@ function DoctorSchedule(props) {
 
     useEffect(() => {
         let arrDate = getAllDate();
-        (async () => {
-            let res = await getScheduleByDate(props.doctorId, arrDate[0].value);
-            setAllAvailableTime(res.data ? res.data : []);
-        })();
+        if (props.doctorId !== -1) {
+            (async () => {
+                let res = await getScheduleByDate(props.doctorId, arrDate[0].value);
+                setAllAvailableTime(res.data ? res.data : []);
+            })();
+        }
     }, [props.doctorId]);
 
     useEffect(() => {

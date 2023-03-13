@@ -124,21 +124,21 @@ function ManageSchedule() {
     return (
         <div className='manage-schedule-container'>
             <div className='title'>
-                <FormattedMessage id='menu.doctor.title' />
+                <FormattedMessage id='manage-schedule.title' />
             </div>
             <div className='container'>
                 <div className='row'>
                     <div className='col-6'>
-                        <label><FormattedMessage id='menu.doctor.title-doctor' /></label>
+                        <label><FormattedMessage id='manage-schedule.title-doctor' /></label>
                         <Select
                             defaultValue={selectedDoctor}
                             onChange={handleChangeSelect}
                             options={listDoctors}
-                            placeholder={<FormattedMessage id='menu.doctor.choose-doctor' />}
+                            placeholder={<FormattedMessage id='manage-schedule.choose-doctor' />}
                         />
                     </div>
                     <div className='col-6'>
-                        <label><FormattedMessage id='menu.doctor.title-date' /></label>
+                        <label><FormattedMessage id='manage-schedule.title-date' /></label>
                         <DatePicker className='form-control' value={currentDate} minDate={new Date().setHours(0, 0, 0, 0)} onChange={handleOnChangeDatePicker} />
                     </div>
                     <div className='col-12 pick-hour-container'>
@@ -151,7 +151,7 @@ function ManageSchedule() {
                         }
                     </div>
                     <div className='col-12 mt-3'>
-                        <button className='btn btn-primary' onClick={() => handleSaveSchedule()}><FormattedMessage id='menu.doctor.btn-save' /></button>
+                        <button className='btn btn-primary' onClick={() => handleSaveSchedule()}><FormattedMessage id='manage-schedule.btn-save' /></button>
                     </div>
                 </div>
             </div>

@@ -74,6 +74,39 @@ export const fetchRoleFail = () => ({
     type: actionTypes.FETCH_ROLE_FAIL
 });
 
+export const fetchRequiredDoctorInfor = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR
+            });
+            let resPrice = await getAllCode('PRICE');
+            let resPayment = await getAllCode('PAYMENT');
+            let resProvince = await getAllCode('PROVINCE');
+            if (resPrice && resPrice.errCode === 0 && resPayment && resPayment.errCode === 0 && resProvince && resProvince.errCode === 0) {
+                let data = {
+                    resPrice: resPrice.data,
+                    resPayment: resPayment.data,
+                    resProvince: resProvince.data,
+                };
+                dispatch(fetchRequiredDoctorInforSuccess(data));
+            } else {
+                dispatch(fetchRequiredDoctorInforFail());
+            }
+        } catch (error) {
+            dispatch(fetchRequiredDoctorInforFail());
+            console.log(error);
+        }
+    };
+};
+export const fetchRequiredDoctorInforSuccess = (data) => ({
+    type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS,
+    data
+});
+export const fetchRequiredDoctorInforFail = () => ({
+    type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAIL
+});
+
 export const createNewUser = (data) => {
     return async (dispatch, getState) => {
         try {

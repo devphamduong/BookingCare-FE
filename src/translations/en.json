@@ -40,13 +40,7 @@
             "manage-handbook": "Manage Handbooks"
         },
         "doctor": {
-            "manage-schedule": "Manage doctor's schedule",
-            "title": "Manage doctor's examination plan",
-            "title-doctor": "Doctor",
-            "title-date": "Date",
-            "choose-doctor": "Choose a doctor",
-            "btn-save": "Save infor",
-            "btn-update": "Save changes"
+            "manage-schedule": "Manage doctor's schedule"
         }
     },
     "manage-user": {
@@ -64,6 +58,14 @@
         "btn-add": "Add user",
         "btn-edit": "Save changes"
     },
+    "manage-schedule": {
+        "title": "Manage doctor's examination plan",
+        "title-doctor": "Doctor",
+        "title-date": "Date",
+        "choose-doctor": "Choose a doctor",
+        "btn-save": "Save infor",
+        "btn-update": "Save changes"
+    },
     "homepage": {
         "btn-more": "More Infor",
         "out-standing-doctor": "Famous doctors last week",
@@ -77,6 +79,25 @@
             "no-schedule": "The doctor does not have an appointment at this time, please choose another time!",
             "choose": "Choose",
             "book-free": "and book (free)"
+        }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more information for doctor",
+            "title-doctor": "Doctor",
+            "choose-doctor": "Choose a doctor",
+            "title-price": "Examination price",
+            "choose-price": "Choose a price",
+            "title-payment": "Payment method",
+            "choose-payment": "Choose a payment method",
+            "title-province": "Province",
+            "choose-province": "Choose a province",
+            "name-clinic": "Clinic name",
+            "address-clinic": "Clinic address",
+            "note": "Note",
+            "intro": "Introduction information",
+            "btn-save": "Create infor",
+            "btn-update": "Save changes"
         }
     }
 }
