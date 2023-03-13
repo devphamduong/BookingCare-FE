@@ -8,18 +8,24 @@ import { useSelector } from 'react-redux';
 import DoctorSchedule from './DoctorSchedule';
 
 function DetailDoctor(props) {
-    const [detailDoctor, setDetailDoctor] = useState({});
     const language = useSelector(state => state.app.language);
+    const [detailDoctor, setDetailDoctor] = useState({});
+    const [currentDoctorId, setCurrentDoctorId] = useState(-1);
 
-    useEffect(async () => {
+    useEffect(() => {
         if (props.match && props.match.params && props.match.params.id) {
             let id = props.match.params.id;
-            let res = await getDetailDoctorById(id);
-            if (res && res.errCode === 0) {
-                setDetailDoctor(res.data);
-            }
+            setCurrentDoctorId(id);
+            getDetailDoctor(id);
         }
     }, []);
+
+    const getDetailDoctor = async (id) => {
+        let res = await getDetailDoctorById(id);
+        if (res && res.errCode === 0) {
+            setDetailDoctor(res.data);
+        }
+    };
 
     let nameVi = '', nameEn = '';
     if (detailDoctor && detailDoctor.positionData) {
@@ -46,7 +52,7 @@ function DetailDoctor(props) {
                 </div>
                 <div className='schedule-doctor'>
                     <div className='content-left'>
-                        <DoctorSchedule doctorId={detailDoctor && detailDoctor.id ? detailDoctor.id : -1} />
+                        <DoctorSchedule doctorId={currentDoctorId} />
                     </div>
                     <div className='content-right'>
 

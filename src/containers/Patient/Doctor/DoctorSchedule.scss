@@ -29,24 +29,42 @@
         }
 
         .time-content {
-            display  : flex;
-            gap      : 15px;
-            flex-wrap: wrap;
+            .time-content-btns {
+                display  : flex;
+                gap      : 15px;
+                flex-wrap: wrap;
 
-            button {
-                min-width       : 120px;
-                padding         : 8px 10px;
-                border          : none;
-                border-radius   : 3px;
-                outline         : none;
-                background-color: #fff04b;
-                font-weight     : 600;
-                color           : #333;
-
-                &:hover {
-                    color           : white;
-                    background-color: #45c3d2;
+                .btn-vi {
+                    min-width: 120px;
                 }
+
+                .btn-en {
+                    min-width: 170px;
+                }
+
+                button {
+                    padding         : 8px 10px;
+                    border          : none;
+                    border-radius   : 3px;
+                    outline         : none;
+                    background-color: #fff04b;
+                    font-weight     : 600;
+                    color           : #333;
+
+                    &:hover {
+                        color           : white;
+                        background-color: #45c3d2;
+                    }
+                }
+
+                .no-schedule {
+                    font-style: italic;
+                    font-size : 14px;
+                }
+            }
+
+            .book-free {
+                margin-top: 10px;
             }
         }
     }
