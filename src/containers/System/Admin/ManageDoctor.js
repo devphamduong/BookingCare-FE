@@ -44,7 +44,7 @@ function ManageDoctor(props) {
     }, []);
 
     useEffect(() => {
-        let dataSelect = buildDataSelect(allDoctors);
+        let dataSelect = buildDataSelect(allDoctors, 'USER');
         setListDoctors(dataSelect);
     }, [allDoctors]);
 
@@ -56,9 +56,9 @@ function ManageDoctor(props) {
 
     useEffect(() => {
         let { resPrice, resPayment, resProvince } = allRequiredDoctorInfor;
-        let dataSelectPrice = buildDataSelect(resPrice);
-        let dataSelectPayment = buildDataSelect(resPayment);
-        let dataSelectProvince = buildDataSelect(resProvince);
+        let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
+        let dataSelectPayment = buildDataSelect(resPayment, 'PAYMENT');
+        let dataSelectProvince = buildDataSelect(resProvince, 'PROVINCE');
         setListPrices(dataSelectPrice);
         setListPayments(dataSelectPayment);
         setListProvinces(dataSelectProvince);
@@ -68,9 +68,9 @@ function ManageDoctor(props) {
         let dataSelect = buildDataSelect(allDoctors, 'USER');
         setListDoctors(dataSelect);
         let { resPrice, resPayment, resProvince } = allRequiredDoctorInfor;
-        let dataSelectPrice = buildDataSelect(resPrice);
-        let dataSelectPayment = buildDataSelect(resPayment);
-        let dataSelectProvince = buildDataSelect(resProvince);
+        let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
+        let dataSelectPayment = buildDataSelect(resPayment, 'PAYMENT');
+        let dataSelectProvince = buildDataSelect(resProvince, 'PROVINCE');
         setListPrices(dataSelectPrice);
         setListPayments(dataSelectPayment);
         setListProvinces(dataSelectProvince);
@@ -79,14 +79,35 @@ function ManageDoctor(props) {
     const buildDataSelect = (data, type) => {
         let result = [];
         if (data && data.length > 0) {
-            data.map((item, index) => {
-                let obj = {};
-                let labelVi = type === 'USER' ? `${item.lastName} ${item.firstName}` : item.valueVi;
-                let labelEn = type === 'USER' ? `${item.firstName} ${item.lastName}` : item.valueEn;
-                obj.label = language === LANGUAGES.VI ? labelVi : labelEn;
-                obj.value = item.id;
-                result.push(obj);
-            });
+            if (type === 'USER') {
+                data.map((item, index) => {
+                    let obj = {};
+                    let labelVi = `${item.lastName} ${item.firstName}`;
+                    let labelEn = `${item.firstName} ${item.lastName}`;
+                    obj.label = language === LANGUAGES.VI ? labelVi : labelEn;
+                    obj.value = item.id;
+                    result.push(obj);
+                });
+            } if (type === 'PRICE') {
+                data.map((item, index) => {
+                    let obj = {};
+                    let labelVi = `${item.valueVi} VND`;
+                    let labelEn = `${item.valueEn} USD`;
+                    obj.label = language === LANGUAGES.VI ? labelVi : labelEn;
+                    obj.value = item.keyMap;
+                    result.push(obj);
+                });
+            }
+            if (type === 'PAYMENT' || type === 'PROVINCE') {
+                data.map((item, index) => {
+                    let obj = {};
+                    let labelVi = `${item.valueVi}`;
+                    let labelEn = `${item.valueEn}`;
+                    obj.label = language === LANGUAGES.VI ? labelVi : labelEn;
+                    obj.value = item.keyMap;
+                    result.push(obj);
+                });
+            }
         }
         return result;
     };
@@ -96,12 +117,18 @@ function ManageDoctor(props) {
         setContentHTML(html);
     };
 
-    const handleSaveContentMarkdown = () => {
+    const handleSaveDoctorInfor = () => {
         dispatch(saveInfoDoctor({
             contentHTML,
             contentMarkdown,
             description,
             doctorId: selectedDoctor.value,
+            selectedPrice: selectedPrice.value,
+            selectedPayment: selectedPayment.value,
+            selectedProvince: selectedProvince.value,
+            nameClinic,
+            addressClinic,
+            note,
             action: hasData ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE
         }));
     };
@@ -118,6 +145,23 @@ function ManageDoctor(props) {
         }
     };
 
+    const handleChangeSelectDoctorInfor = async (selectedOption, name) => {
+        let stateName = name.name;
+        switch (stateName) {
+            case 'selectedPrice':
+                setSelectedPrice(selectedOption);
+                break;
+            case 'selectedPayment':
+                setSelectedPayment(selectedOption);
+                break;
+            case 'selectedProvince':
+                setSelectedProvince(selectedOption);
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <div className='manage-doctor-container'>
             <div className='title'><FormattedMessage id='admin.manage-doctor.title' /></div>
@@ -128,6 +172,7 @@ function ManageDoctor(props) {
                         defaultValue={selectedDoctor}
                         onChange={handleChangeSelect}
                         options={listDoctors}
+                        name='selectedDoctor'
                         placeholder={<FormattedMessage id='admin.manage-doctor.choose-doctor' />}
                     />
                 </div>
@@ -136,13 +181,14 @@ function ManageDoctor(props) {
                     <textarea className='form-control' value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
                 </div>
             </div>
-            <div className='extra-info row'>
+            <div className='extra-info row pb-3'>
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.title-price' /></label>
                     <Select
                         defaultValue={selectedPrice}
-                        onChange={handleChangeSelect}
+                        onChange={handleChangeSelectDoctorInfor}
                         options={listPrices}
+                        name='selectedPrice'
                         placeholder={<FormattedMessage id='admin.manage-doctor.choose-price' />}
                     />
                 </div>
@@ -150,8 +196,9 @@ function ManageDoctor(props) {
                     <label><FormattedMessage id='admin.manage-doctor.title-payment' /></label>
                     <Select
                         defaultValue={selectedPayment}
-                        onChange={handleChangeSelect}
+                        onChange={handleChangeSelectDoctorInfor}
                         options={listPayments}
+                        name='selectedPayment'
                         placeholder={<FormattedMessage id='admin.manage-doctor.choose-payment' />}
                     />
                 </div>
@@ -159,25 +206,29 @@ function ManageDoctor(props) {
                     <label><FormattedMessage id='admin.manage-doctor.title-province' /></label>
                     <Select
                         defaultValue={selectedProvince}
-                        onChange={handleChangeSelect}
+                        onChange={handleChangeSelectDoctorInfor}
                         options={listProvinces}
+                        name='selectedProvince'
                         placeholder={<FormattedMessage id='admin.manage-doctor.choose-province' />}
                     />
                 </div>
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.name-clinic' /></label>
+                    <input type='text' className='form-control' value={nameClinic} onChange={(event) => setNameClinic(event.target.value)} />
                 </div>
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.address-clinic' /></label>
+                    <input type='text' className='form-control' value={addressClinic} onChange={(event) => setAddressClinic(event.target.value)} />
                 </div>
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.note' /></label>
+                    <input type='text' className='form-control' value={note} onChange={(event) => setNote(event.target.value)} />
                 </div>
             </div>
             <div className='manage-doctor-editor'>
                 <MdEditor style={{ height: '500px' }} value={contentMarkdown} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
             </div>
-            <button className={hasData ? 'btn btn-warning my-3' : 'btn btn-primary my-3'} onClick={() => handleSaveContentMarkdown()}>{hasData ? <FormattedMessage id='admin.manage-doctor.btn-update' /> : <FormattedMessage id='admin.manage-doctor.btn-save' />}</button>
+            <button className={hasData ? 'btn btn-warning my-3' : 'btn btn-primary my-3'} onClick={() => handleSaveDoctorInfor()}>{hasData ? <FormattedMessage id='admin.manage-doctor.btn-update' /> : <FormattedMessage id='admin.manage-doctor.btn-save' />}</button>
         </div>
     );
 }
