@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import moment from 'moment';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -9,6 +11,7 @@ import './ProfileDoctor.scss';
 
 function ProfileDoctor(props) {
     const language = useSelector(state => state.app.language);
+    const { isShowDescription, dataSchedule } = props;
     const [dataProfile, setDataProfile] = useState({});
 
     useEffect(() => {
@@ -29,6 +32,24 @@ function ProfileDoctor(props) {
         return result;
     };
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
+    const renderTimeBooking = (dataSchedule) => {
+        if (dataSchedule && !_.isEmpty(dataSchedule)) {
+            let time = language === LANGUAGES.VI ? dataSchedule.timeTypeData.valueVi : dataSchedule.timeTypeData.valueEn;
+            let date = language === LANGUAGES.VI ? moment.unix(+dataSchedule.date / 1000).format('dddd - DD/MM/yyyy') : moment.unix(+dataSchedule.date / 1000).locale('en').format('ddd - MM/DD/yyyy');
+            return (
+                <>
+                    <div>{time} - {capitalizeFirstLetter(date)}</div>
+                    <div>Miễn phí đặt lịch</div>
+                </>
+            );
+        }
+        return <></>;
+    };
+
     let nameVi = '', nameEn = '';
     if (dataProfile && dataProfile.positionData) {
         nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`;
@@ -44,8 +65,16 @@ function ProfileDoctor(props) {
                         {language === LANGUAGES.VI ? nameVi : nameEn}
                     </div>
                     <div className='down'>
-                        {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description &&
-                            <span>{dataProfile.Markdown.description}</span>
+                        {isShowDescription
+                            ?
+                            <>
+                                {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description &&
+                                    <span>{dataProfile.Markdown.description}</span>}
+                            </>
+                            :
+                            <>
+                                {renderTimeBooking(dataSchedule)}
+                            </>
                         }
                     </div>
                 </div>

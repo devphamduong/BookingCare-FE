@@ -16,7 +16,7 @@ function Header(props) {
 
     return (
         <>
-            <Navbar style={{ backgroundColor: 'white' }} sticky='top' expand="lg" className='home-header-container'>
+            <Navbar style={{ backgroundColor: 'white', zIndex: '9999' }} sticky='top' expand="lg" className='home-header-container'>
                 <Container>
                     <Navbar.Brand className='header-brand'>
                         <Link to={'/home'}>
