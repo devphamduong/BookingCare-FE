@@ -6,6 +6,7 @@ import { LANGUAGES } from '../../../utils/constant';
 import './DetailDoctor.scss';
 import { useSelector } from 'react-redux';
 import DoctorSchedule from './DoctorSchedule';
+import DoctorExtraInfor from './DoctorExtraInfor';
 
 function DetailDoctor(props) {
     const language = useSelector(state => state.app.language);
@@ -55,7 +56,7 @@ function DetailDoctor(props) {
                         <DoctorSchedule doctorId={currentDoctorId} />
                     </div>
                     <div className='content-right'>
-
+                        <DoctorExtraInfor doctorId={currentDoctorId} />
                     </div>
                 </div>
                 <div className='detail-infor-doctor'>

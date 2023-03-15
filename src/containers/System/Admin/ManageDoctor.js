@@ -48,12 +48,6 @@ function ManageDoctor(props) {
         setListDoctors(dataSelect);
     }, [allDoctors]);
 
-
-    useEffect(() => {
-        let dataSelect = buildDataSelect(allDoctors, 'USER');
-        setListDoctors(dataSelect);
-    }, [allDoctors]);
-
     useEffect(() => {
         let { resPrice, resPayment, resProvince } = allRequiredDoctorInfor;
         let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
@@ -141,6 +135,27 @@ function ManageDoctor(props) {
             setContentMarkdown(markdown.contentMarkdown ? markdown.contentMarkdown : '');
             setContentHTML(markdown.contentHTML ? markdown.contentHTML : '');
             setDescription(markdown.description ? markdown.description : '');
+            if (res.data.Doctor_Infor) {
+                let doctor_infor = res.data.Doctor_Infor;
+                let priceId = doctor_infor.priceId;
+                let paymentId = doctor_infor.paymentId;
+                let provinceId = doctor_infor.provinceId;
+                let selectedPrice = listPrices.find(item => {
+                    return item && item.value === priceId;
+                });
+                let selectedPayment = listPayments.find(item => {
+                    return item && item.value === paymentId;
+                });
+                let selectedProvince = listProvinces.find(item => {
+                    return item && item.value === provinceId;
+                });
+                setSelectedPrice(selectedPrice ? selectedPrice : '');
+                setSelectedPayment(selectedPayment ? selectedPayment : '');
+                setSelectedProvince(selectedProvince ? selectedProvince : '');
+                setNameClinic(doctor_infor.nameClinic ? doctor_infor.nameClinic : '');
+                setAddressClinic(doctor_infor.addressClinic ? doctor_infor.addressClinic : '');
+                setNote(doctor_infor.note ? doctor_infor.note : '');
+            }
             setHasData(markdown.contentMarkdown && markdown.contentHTML && markdown.description ? true : false);
         }
     };
@@ -185,7 +200,7 @@ function ManageDoctor(props) {
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.title-price' /></label>
                     <Select
-                        defaultValue={selectedPrice}
+                        value={selectedPrice}
                         onChange={handleChangeSelectDoctorInfor}
                         options={listPrices}
                         name='selectedPrice'
@@ -195,7 +210,7 @@ function ManageDoctor(props) {
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.title-payment' /></label>
                     <Select
-                        defaultValue={selectedPayment}
+                        value={selectedPayment}
                         onChange={handleChangeSelectDoctorInfor}
                         options={listPayments}
                         name='selectedPayment'
@@ -205,7 +220,7 @@ function ManageDoctor(props) {
                 <div className='col-4'>
                     <label><FormattedMessage id='admin.manage-doctor.title-province' /></label>
                     <Select
-                        defaultValue={selectedProvince}
+                        value={selectedProvince}
                         onChange={handleChangeSelectDoctorInfor}
                         options={listProvinces}
                         name='selectedProvince'
