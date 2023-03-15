@@ -54,4 +54,8 @@ const getDoctorExtraInforById = (doctorId) => {
     return axios.get(`/api/get-doctor-extra-infor-by-id?doctorId=${doctorId}`);
 };
 
-export { handleLogin, getAllUsers, createUser, deleteUser, updateUser, getAllCode, getTopDoctor, getAllDoctors, saveInforDoctor, getDetailDoctorById, bulkCreateSchedule, getScheduleByDate, getDoctorExtraInforById };
+const getDoctorProfileById = (doctorId) => {
+    return axios.get(`/api/get-doctor-profile-by-id?doctorId=${doctorId}`);
+};
+
+export { handleLogin, getAllUsers, createUser, deleteUser, updateUser, getAllCode, getTopDoctor, getAllDoctors, saveInforDoctor, getDetailDoctorById, bulkCreateSchedule, getScheduleByDate, getDoctorExtraInforById, getDoctorProfileById };

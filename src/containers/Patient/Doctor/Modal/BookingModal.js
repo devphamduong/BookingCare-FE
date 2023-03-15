@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import { Button, Modal } from 'react-bootstrap';
+import ProfileDoctor from '../ProfileDoctor';
 import './BookingModal.scss';
 
 function BookingModal(props) {
@@ -13,10 +15,7 @@ function BookingModal(props) {
                 <Modal.Body>
                     <div className='booing-modal-body'>
                         <div className='doctor-infor'>
-
-                        </div>
-                        <div className='price'>
-                            Giá khám: 500,000 VND
+                            <ProfileDoctor doctorId={dataSchedule && !_.isEmpty(dataSchedule) ? dataSchedule.doctorId : ''} />
                         </div>
                         <div className='row'>
                             <div className='col-6 form-group'>
