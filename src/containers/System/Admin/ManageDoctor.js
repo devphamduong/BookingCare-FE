@@ -82,7 +82,8 @@ function ManageDoctor(props) {
                     obj.value = item.id;
                     result.push(obj);
                 });
-            } if (type === 'PRICE') {
+            }
+            if (type === 'PRICE') {
                 data.map((item, index) => {
                     let obj = {};
                     let labelVi = `${item.valueVi} VND`;

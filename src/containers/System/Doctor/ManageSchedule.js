@@ -10,8 +10,6 @@ import './ManageSchedule.scss';
 import { useImmer } from 'use-immer';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
-import moment from 'moment';
-import { dateFormat } from '../../../utils';
 import { bulkCreateSchedule } from '../../../services/userService';
 
 function ManageSchedule() {

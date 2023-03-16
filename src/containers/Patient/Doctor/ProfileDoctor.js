@@ -43,7 +43,7 @@ function ProfileDoctor(props) {
             return (
                 <>
                     <div>{time} - {capitalizeFirstLetter(date)}</div>
-                    <div>Miễn phí đặt lịch</div>
+                    <div><FormattedMessage id='patient.booking-modal.free' /></div>
                 </>
             );
         }
@@ -80,7 +80,7 @@ function ProfileDoctor(props) {
                 </div>
             </div>
             <div className='price'>
-                <FormattedMessage id='patient.extra-infor.price-title' /> <NumericFormat value={dataProfile && dataProfile.Doctor_Infor && dataProfile.Doctor_Infor?.priceTypeData && language === LANGUAGES.VI ? dataProfile.Doctor_Infor?.priceTypeData?.valueVi : dataProfile.Doctor_Infor?.priceTypeData?.valueEn} displayType={'text'} thousandSeparator={true} suffix={language === LANGUAGES.VI ? ' VND' : ' USD'} />
+                <FormattedMessage id='patient.booking-modal.price-title' /><NumericFormat value={dataProfile && dataProfile.Doctor_Infor && dataProfile.Doctor_Infor?.priceTypeData && language === LANGUAGES.VI ? dataProfile.Doctor_Infor?.priceTypeData?.valueVi : dataProfile.Doctor_Infor?.priceTypeData?.valueEn} displayType={'text'} thousandSeparator={true} suffix={language === LANGUAGES.VI ? ' VND' : ' USD'} />
             </div>
         </div>
     );
