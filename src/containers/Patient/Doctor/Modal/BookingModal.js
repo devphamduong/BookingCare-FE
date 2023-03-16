@@ -13,6 +13,7 @@ import './BookingModal.scss';
 import { makeAnAppointment } from '../../../../services/userService';
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
 
 function BookingModal(props) {
     let { show, handleClose, dataSchedule } = props;
@@ -85,8 +86,31 @@ function BookingModal(props) {
         setSelectedGender(selectedOption);
     };
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
+    const buildTimeBooking = (dataSchedule) => {
+        if (dataSchedule && !_.isEmpty(dataSchedule)) {
+            let time = language === LANGUAGES.VI ? dataSchedule.timeTypeData.valueVi : dataSchedule.timeTypeData.valueEn;
+            let date = language === LANGUAGES.VI ? moment.unix(+dataSchedule.date / 1000).format('dddd - DD/MM/yyyy') : moment.unix(+dataSchedule.date / 1000).locale('en').format('ddd - MM/DD/yyyy');
+            return `${time} - ${capitalizeFirstLetter(date)}`;
+        }
+        return '';
+    };
+
+    const buildDoctorName = (dataSchedule) => {
+        if (dataSchedule && !_.isEmpty(dataSchedule)) {
+            let name = language === LANGUAGES.VI ? `${dataSchedule.doctorData.lastName} ${dataSchedule.doctorData.firstName}` : `${dataSchedule.doctorData.firstName} ${dataSchedule.doctorData.lastName}`;
+            return name;
+        }
+        return '';
+    };
+
     const handleConfirmBooking = async () => {
         let date = new Date(inputs.birthday).getTime();
+        let time = buildTimeBooking(dataSchedule);
+        let doctorName = buildDoctorName(dataSchedule);
         let res = await makeAnAppointment({
             doctorId,
             fullname: inputs.fullname,
@@ -95,7 +119,10 @@ function BookingModal(props) {
             reason: inputs.reason,
             date,
             timeType,
-            selectedGender: selectedGender.value
+            selectedGender: selectedGender.value,
+            language,
+            time,
+            doctorName
         });
         if (res && res.errCode === 0) {
             toast.success(res.errMessage);
@@ -147,7 +174,7 @@ function BookingModal(props) {
                                     value={selectedGender}
                                     onChange={handleChangeSelect}
                                     options={listGenders}
-                                    placeholder={'Chọn giới tính'}
+                                    placeholder={<FormattedMessage id='patient.booking-modal.choose-gender' />}
                                 />
                             </div>
                         </div>

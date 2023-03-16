@@ -97,6 +97,7 @@
             "reason": "Reason for examination",
             "birthday": "Birthday",
             "gender": "Gender",
+            "choose-gender": "Choose a gender",
             "btn-cancel": "Cancel",
             "btn-confirm": "Make an appointment"
         }

@@ -97,6 +97,7 @@
             "reason": "Lý do khám",
             "birthday": "Ngày sinh",
             "gender": "Giới tính",
+            "choose-gender": "Chọn giới tính",
             "btn-cancel": "Hủy",
             "btn-confirm": "Đặt lịch hẹn"
         }
