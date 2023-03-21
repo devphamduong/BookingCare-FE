@@ -38,6 +38,10 @@ function ManageSpecialty(props) {
         });
         if (res && res.errCode === 0) {
             toast.success("Added new specialty successfully!");
+            setName('');
+            setImgBase64('');
+            setDescriptionMarkdown('');
+            setDescriptionHTML('');
         } else {
             toast.error("Something wrong... Please try again!");
         }
@@ -64,7 +68,7 @@ function ManageSpecialty(props) {
                     </div>
                     <div className='col-12'>
                         <button className='btn btn-primary' onClick={() => handleSaveSpecialty()}>Save infor</button>
-                        <button className='btn btn-warning' onClick={() => handleSaveSpecialty()}>Save changes</button>
+                        {/* <button className='btn btn-warning' onClick={() => handleSaveSpecialty()}>Save changes</button> */}
                     </div>
                 </div>
             </div>

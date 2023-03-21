@@ -1,8 +1,21 @@
+import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
+import { getAllSpecialties } from '../../../services/userService';
+import './Specialty.scss';
 
 function Specialty(props) {
     const { settings } = props;
+    const [specialties, setSpecialties] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            let res = await getAllSpecialties();
+            if (res && res.errCode === 0) {
+                setSpecialties(res.data ? res.data : []);
+            }
+        })();
+    }, []);
 
     return (
         <div className='section-share section-specialty'>
@@ -13,30 +26,16 @@ function Specialty(props) {
                 </div>
                 <div className="section-body">
                     <Slider {...settings}>
-                        <div className="section-customize">
-                            <div className="bg-image section-specialty" />
-                            <div>Cơ xương khớp</div>
-                        </div>
-                        <div className="section-customize">
-                            <div className="bg-image section-specialty" />
-                            <div>Cơ xương khớp</div>
-                        </div>
-                        <div className="section-customize">
-                            <div className="bg-image section-specialty" />
-                            <div>Cơ xương khớp</div>
-                        </div>
-                        <div className="section-customize">
-                            <div className="bg-image section-specialty" />
-                            <div>Cơ xương khớp</div>
-                        </div>
-                        <div className="section-customize">
-                            <div className="bg-image section-specialty" />
-                            <div>Cơ xương khớp</div>
-                        </div>
-                        <div className="section-customize">
-                            <div className="bg-image section-specialty" />
-                            <div>Cơ xương khớp</div>
-                        </div>
+                        {specialties && specialties.length > 0 &&
+                            specialties.map((item, index) => {
+                                return (
+                                    <div key={index} className="section-customize specialty-child">
+                                        <div className="bg-image section-specialty" style={{ backgroundImage: `url(${item.image})` }} />
+                                        <div className="specialty-name">{item.name}</div>
+                                    </div>
+                                );
+                            })
+                        }
                     </Slider>
                 </div>
             </div>
