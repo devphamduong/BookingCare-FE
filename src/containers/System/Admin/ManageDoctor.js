@@ -34,6 +34,10 @@ function ManageDoctor(props) {
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [listProvinces, setListProvinces] = useState([]);
     const [selectedProvince, setSelectedProvince] = useState(null);
+    const [listSpecialties, setListSpecialties] = useState([]);
+    const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+    const [listClinics, setListClinics] = useState([]);
+    const [selectedClinic, setSelectedClinic] = useState(null);
     const [addressClinic, setAddressClinic] = useState([]);
     const [nameClinic, setNameClinic] = useState([]);
     const [note, setNote] = useState([]);
@@ -49,25 +53,29 @@ function ManageDoctor(props) {
     }, [allDoctors]);
 
     useEffect(() => {
-        let { resPrice, resPayment, resProvince } = allRequiredDoctorInfor;
+        let { resPrice, resPayment, resProvince, resSpecialty } = allRequiredDoctorInfor;
         let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
         let dataSelectPayment = buildDataSelect(resPayment, 'PAYMENT');
         let dataSelectProvince = buildDataSelect(resProvince, 'PROVINCE');
+        let dataSelectSpecialties = buildDataSelect(resSpecialty, 'SPECIALTY');
         setListPrices(dataSelectPrice);
         setListPayments(dataSelectPayment);
         setListProvinces(dataSelectProvince);
+        setListSpecialties(dataSelectSpecialties);
     }, [allRequiredDoctorInfor]);
 
     useEffect(() => {
         let dataSelect = buildDataSelect(allDoctors, 'USER');
         setListDoctors(dataSelect);
-        let { resPrice, resPayment, resProvince } = allRequiredDoctorInfor;
+        let { resPrice, resPayment, resProvince, resSpecialty } = allRequiredDoctorInfor;
         let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
         let dataSelectPayment = buildDataSelect(resPayment, 'PAYMENT');
         let dataSelectProvince = buildDataSelect(resProvince, 'PROVINCE');
+        let dataSelectSpecialties = buildDataSelect(resSpecialty, 'SPECIALTY');
         setListPrices(dataSelectPrice);
         setListPayments(dataSelectPayment);
         setListProvinces(dataSelectProvince);
+        setListSpecialties(dataSelectSpecialties);
     }, [language]);
 
     const buildDataSelect = (data, type) => {
@@ -103,6 +111,14 @@ function ManageDoctor(props) {
                     result.push(obj);
                 });
             }
+            if (type === 'SPECIALTY') {
+                data.map((item, index) => {
+                    let obj = {};
+                    obj.label = item.name;
+                    obj.value = item.id;
+                    result.push(obj);
+                });
+            }
         }
         return result;
     };
@@ -118,6 +134,8 @@ function ManageDoctor(props) {
             contentMarkdown,
             description,
             doctorId: selectedDoctor.value,
+            specialtyId: selectedSpecialty && selectedSpecialty.value ? selectedSpecialty.value : '',
+            clinicId: selectedClinic && selectedClinic.value ? selectedClinic.value : '',
             selectedPrice: selectedPrice.value,
             selectedPayment: selectedPayment.value,
             selectedProvince: selectedProvince.value,
@@ -138,9 +156,13 @@ function ManageDoctor(props) {
             setDescription(markdown.description ? markdown.description : '');
             if (res.data.Doctor_Infor) {
                 let doctor_infor = res.data.Doctor_Infor;
+                let specialtyId = doctor_infor.specialtyId;
                 let priceId = doctor_infor.priceId;
                 let paymentId = doctor_infor.paymentId;
                 let provinceId = doctor_infor.provinceId;
+                let selectedSpecialty = listSpecialties.find(item => {
+                    return item && item.value === specialtyId;
+                });
                 let selectedPrice = listPrices.find(item => {
                     return item && item.value === priceId;
                 });
@@ -150,6 +172,7 @@ function ManageDoctor(props) {
                 let selectedProvince = listProvinces.find(item => {
                     return item && item.value === provinceId;
                 });
+                setSelectedSpecialty(selectedSpecialty ? selectedSpecialty : '');
                 setSelectedPrice(selectedPrice ? selectedPrice : '');
                 setSelectedPayment(selectedPayment ? selectedPayment : '');
                 setSelectedProvince(selectedProvince ? selectedProvince : '');
@@ -172,6 +195,9 @@ function ManageDoctor(props) {
                 break;
             case 'selectedProvince':
                 setSelectedProvince(selectedOption);
+                break;
+            case 'selectedSpecialty':
+                setSelectedSpecialty(selectedOption);
                 break;
             default:
                 break;
@@ -240,9 +266,29 @@ function ManageDoctor(props) {
                     <label><FormattedMessage id='admin.manage-doctor.note' /></label>
                     <input type='text' className='form-control' value={note} onChange={(event) => setNote(event.target.value)} />
                 </div>
+                <div className='col-4'>
+                    <label><FormattedMessage id='admin.manage-doctor.title-specialty' /></label>
+                    <Select
+                        value={selectedSpecialty}
+                        onChange={handleChangeSelectDoctorInfor}
+                        options={listSpecialties}
+                        name='selectedSpecialty'
+                        placeholder={<FormattedMessage id='admin.manage-doctor.choose-specialty' />}
+                    />
+                </div>
+                <div className='col-4'>
+                    <label><FormattedMessage id='admin.manage-doctor.title-clinic' /></label>
+                    <Select
+                        value={selectedClinic}
+                        onChange={handleChangeSelectDoctorInfor}
+                        options={listClinics}
+                        name='selectedClinic'
+                        placeholder={<FormattedMessage id='admin.manage-doctor.choose-clinic' />}
+                    />
+                </div>
             </div>
             <div className='manage-doctor-editor'>
-                <MdEditor style={{ height: '500px' }} value={contentMarkdown} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
+                <MdEditor style={{ height: '300px' }} value={contentMarkdown} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
             </div>
             <button className={hasData ? 'btn btn-warning my-3' : 'btn btn-primary my-3'} onClick={() => handleSaveDoctorInfor()}>{hasData ? <FormattedMessage id='admin.manage-doctor.btn-update' /> : <FormattedMessage id='admin.manage-doctor.btn-save' />}</button>
         </div>

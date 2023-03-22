@@ -70,7 +70,7 @@ const createSpecialty = (data) => {
     return axios.post(`/api/create-specialty`, data);
 };
 
-const getAllSpecialties = (data) => {
+const getAllSpecialties = () => {
     return axios.get(`/api/get-all-specialties`);
 };
 
