@@ -74,4 +74,8 @@ const getAllSpecialties = () => {
     return axios.get(`/api/get-all-specialties`);
 };
 
-export { handleLogin, getAllUsers, createUser, deleteUser, updateUser, getAllCode, getTopDoctor, getAllDoctors, saveInforDoctor, getDetailDoctorById, bulkCreateSchedule, getScheduleByDate, getDoctorExtraInforById, getDoctorProfileById, makeAnAppointment, verifyAnAppointment, createSpecialty, getAllSpecialties };
+const getDetailSpecialtyById = (data) => {
+    return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`);
+};
+
+export { handleLogin, getAllUsers, createUser, deleteUser, updateUser, getAllCode, getTopDoctor, getAllDoctors, saveInforDoctor, getDetailDoctorById, bulkCreateSchedule, getScheduleByDate, getDoctorExtraInforById, getDoctorProfileById, makeAnAppointment, verifyAnAppointment, createSpecialty, getAllSpecialties, getDetailSpecialtyById };
