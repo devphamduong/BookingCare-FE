@@ -32,16 +32,43 @@ function DetailSpecialty(props) {
                             });
                         }
                     }
+                    let dataProvince = resProvince.data;
+                    if (dataProvince && dataProvince.length > 0) {
+                        dataProvince.unshift({
+                            keyMap: 'ALL',
+                            type: 'PROVINCE',
+                            valueVi: 'Toàn quốc',
+                            valueEn: 'ALL'
+                        });
+                    }
                     setDataDetailSpecialty(res.data);
                     setArrDoctorId(arrDoctorId);
-                    setListProvinces(resProvince.data);
+                    setListProvinces(dataProvince ? dataProvince : []);
                 }
             }
         })();
     }, []);
 
-    const handleOnChangeSelect = (event) => {
-
+    const handleOnChangeSelect = async (event) => {
+        if (props.match && props.match.params && props.match.params.id) {
+            let id = props.match.params.id;
+            let location = event.target.value;
+            let res = await getDetailSpecialtyById({ id, location });
+            if (res && res.errCode === 0) {
+                let data = res.data;
+                let arrDoctorId = [];
+                if (data && !_.isEmpty(res.data)) {
+                    let arr = data.doctorSpecialty;
+                    if (arr && arr.length > 0) {
+                        arr.map(item => {
+                            arrDoctorId.push(item.doctorId);
+                        });
+                    }
+                }
+                setDataDetailSpecialty(res.data);
+                setArrDoctorId(arrDoctorId);
+            }
+        }
     };
 
     return (
@@ -69,7 +96,7 @@ function DetailSpecialty(props) {
                             <div className='each-doctor' key={index}>
                                 <div className='detail-content-left'>
                                     <div className='profile-doctor'>
-                                        <ProfileDoctor isShowDescription={true} doctorId={item} />
+                                        <ProfileDoctor isShowDescription={true} doctorId={item} isShowPrice={false} isShowLinkDetail={true} />
                                     </div>
                                 </div>
                                 <div className='detail-content-right'>

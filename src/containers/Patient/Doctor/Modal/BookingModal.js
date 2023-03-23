@@ -141,7 +141,7 @@ function BookingModal(props) {
                 <Modal.Body>
                     <div className='booing-modal-body'>
                         <div className='doctor-infor'>
-                            <ProfileDoctor doctorId={dataSchedule && !_.isEmpty(dataSchedule) ? dataSchedule.doctorId : ''} dataSchedule={dataSchedule} isShowDescription={false} />
+                            <ProfileDoctor doctorId={dataSchedule && !_.isEmpty(dataSchedule) ? dataSchedule.doctorId : ''} dataSchedule={dataSchedule} isShowDescription={false} isShowPrice={true} isShowLinkDetail={false} />
                         </div>
                         <div className='row'>
                             <div className='col-6 form-group'>

@@ -5,13 +5,14 @@ import { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NumericFormat } from 'react-number-format';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getDoctorProfileById } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 import './ProfileDoctor.scss';
 
 function ProfileDoctor(props) {
     const language = useSelector(state => state.app.language);
-    const { isShowDescription, dataSchedule } = props;
+    const { doctorId, isShowDescription, dataSchedule, isShowPrice, isShowLinkDetail } = props;
     const [dataProfile, setDataProfile] = useState({});
 
     useEffect(() => {
@@ -79,9 +80,18 @@ function ProfileDoctor(props) {
                     </div>
                 </div>
             </div>
-            <div className='price'>
-                <FormattedMessage id='patient.booking-modal.price-title' /><NumericFormat value={dataProfile && dataProfile.Doctor_Infor && dataProfile.Doctor_Infor?.priceTypeData && language === LANGUAGES.VI ? dataProfile.Doctor_Infor?.priceTypeData?.valueVi : dataProfile.Doctor_Infor?.priceTypeData?.valueEn} displayType={'text'} thousandSeparator={true} suffix={language === LANGUAGES.VI ? ' VND' : ' USD'} />
-            </div>
+            {isShowPrice &&
+                <div className='price'>
+                    <FormattedMessage id='patient.booking-modal.price-title' /><NumericFormat value={dataProfile && dataProfile.Doctor_Infor && dataProfile.Doctor_Infor?.priceTypeData && language === LANGUAGES.VI ? dataProfile.Doctor_Infor?.priceTypeData?.valueVi : dataProfile.Doctor_Infor?.priceTypeData?.valueEn} displayType={'text'} thousandSeparator={true} suffix={language === LANGUAGES.VI ? ' VND' : ' USD'} />
+                </div>
+            }
+            {isShowLinkDetail &&
+                <div className='detail'>
+                    <Link to={`/detail-doctor/${doctorId}`}>
+                        <FormattedMessage id='patient.booking-modal.detail-title' />
+                    </Link>
+                </div>
+            }
         </div>
     );
 };
