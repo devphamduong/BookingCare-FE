@@ -41,8 +41,7 @@ function Specialty(props) {
                                         <div className="specialty-name" onClick={() => viewDetailSpecialty(item)}>{item.name}</div>
                                     </div>
                                 );
-                            })
-                        }
+                            })}
                     </Slider>
                 </div>
             </div>

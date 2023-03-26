@@ -53,29 +53,33 @@ function ManageDoctor(props) {
     }, [allDoctors]);
 
     useEffect(() => {
-        let { resPrice, resPayment, resProvince, resSpecialty } = allRequiredDoctorInfor;
+        let { resPrice, resPayment, resProvince, resSpecialty, resClinic } = allRequiredDoctorInfor;
         let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
         let dataSelectPayment = buildDataSelect(resPayment, 'PAYMENT');
         let dataSelectProvince = buildDataSelect(resProvince, 'PROVINCE');
         let dataSelectSpecialties = buildDataSelect(resSpecialty, 'SPECIALTY');
+        let dataSelectClinics = buildDataSelect(resClinic, 'CLINIC');
         setListPrices(dataSelectPrice);
         setListPayments(dataSelectPayment);
         setListProvinces(dataSelectProvince);
         setListSpecialties(dataSelectSpecialties);
+        setListClinics(dataSelectClinics);
     }, [allRequiredDoctorInfor]);
 
     useEffect(() => {
         let dataSelect = buildDataSelect(allDoctors, 'USER');
         setListDoctors(dataSelect);
-        let { resPrice, resPayment, resProvince, resSpecialty } = allRequiredDoctorInfor;
+        let { resPrice, resPayment, resProvince, resSpecialty, resClinic } = allRequiredDoctorInfor;
         let dataSelectPrice = buildDataSelect(resPrice, 'PRICE');
         let dataSelectPayment = buildDataSelect(resPayment, 'PAYMENT');
         let dataSelectProvince = buildDataSelect(resProvince, 'PROVINCE');
         let dataSelectSpecialties = buildDataSelect(resSpecialty, 'SPECIALTY');
+        let dataSelectClinics = buildDataSelect(resClinic, 'CLINIC');
         setListPrices(dataSelectPrice);
         setListPayments(dataSelectPayment);
         setListProvinces(dataSelectProvince);
         setListSpecialties(dataSelectSpecialties);
+        setListClinics(dataSelectClinics);
     }, [language]);
 
     const buildDataSelect = (data, type) => {
@@ -111,7 +115,7 @@ function ManageDoctor(props) {
                     result.push(obj);
                 });
             }
-            if (type === 'SPECIALTY') {
+            if (type === 'SPECIALTY' || type === 'CLINIC') {
                 data.map((item, index) => {
                     let obj = {};
                     obj.label = item.name;
@@ -157,11 +161,15 @@ function ManageDoctor(props) {
             if (res.data.Doctor_Infor) {
                 let doctor_infor = res.data.Doctor_Infor;
                 let specialtyId = doctor_infor.specialtyId;
+                let clinicId = doctor_infor.clinicId;
                 let priceId = doctor_infor.priceId;
                 let paymentId = doctor_infor.paymentId;
                 let provinceId = doctor_infor.provinceId;
                 let selectedSpecialty = listSpecialties.find(item => {
                     return item && item.value === specialtyId;
+                });
+                let selectedClinic = listClinics.find(item => {
+                    return item && item.value === clinicId;
                 });
                 let selectedPrice = listPrices.find(item => {
                     return item && item.value === priceId;
@@ -173,6 +181,7 @@ function ManageDoctor(props) {
                     return item && item.value === provinceId;
                 });
                 setSelectedSpecialty(selectedSpecialty ? selectedSpecialty : '');
+                setSelectedClinic(selectedClinic ? selectedClinic : '');
                 setSelectedPrice(selectedPrice ? selectedPrice : '');
                 setSelectedPayment(selectedPayment ? selectedPayment : '');
                 setSelectedProvince(selectedProvince ? selectedProvince : '');
@@ -198,6 +207,9 @@ function ManageDoctor(props) {
                 break;
             case 'selectedSpecialty':
                 setSelectedSpecialty(selectedOption);
+                break;
+            case 'selectedClinic':
+                setSelectedClinic(selectedOption);
                 break;
             default:
                 break;
