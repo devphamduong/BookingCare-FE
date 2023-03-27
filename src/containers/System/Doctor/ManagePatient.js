@@ -1,13 +1,47 @@
 import DatePicker from '../../../components/Input/DatePicker';
 import { FormattedMessage } from 'react-intl';
 import './ManagePatient.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getListPatientForDoctor } from '../../../services/userService';
+import moment from 'moment';
 
 function ManagePatient(props) {
-    const [currentDate, setCurrentDate] = useState(new Date());
+    const user = useSelector(state => state.user.userInfo);
+    const language = useSelector(state => state.app.language);
+    const [currentDate, setCurrentDate] = useState(moment(new Date()).startOf('day').valueOf());
+    const [dataPatient, setDataPatient] = useState([]);
+
+    useEffect(() => {
+        let formattedDate = new Date(currentDate).getTime();
+        getDataPatient(user, formattedDate);
+    }, []);
+
+    useEffect(() => {
+        let formattedDate = new Date(currentDate).getTime();
+        getDataPatient(user, formattedDate);
+    }, [currentDate]);
+
+    const getDataPatient = async (user, formattedDate) => {
+        let res = await getListPatientForDoctor({
+            doctorId: user.id,
+            date: formattedDate
+        });
+        if (res && res.errCode === 0) {
+            setDataPatient(res.data);
+        }
+    };
 
     const handleOnChangeDatePicker = (date) => {
         setCurrentDate(date[0]);
+    };
+
+    const handleConfirm = () => {
+
+    };
+
+    const handleSendRemedy = () => {
+
     };
 
     return (
@@ -25,19 +59,33 @@ function ManagePatient(props) {
                         <table className="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Họ và tên</th>
+                                    <th scope="col">Địa chỉ</th>
+                                    <th scope="col">Giới tính</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
+                                {dataPatient && dataPatient.length > 0
+                                    ? dataPatient.map((item, index) => {
+                                        return (
+                                            <tr>
+                                                <th scope="row">{index + 1}</th>
+                                                <td>{item.timeTypeDataPatient.valueVi}</td>
+                                                <td>{item.patientData.firstName}</td>
+                                                <td>{item.patientData.address}</td>
+                                                <td>{item.patientData.genderData.valueVi}</td>
+                                                <td>
+                                                    <button className='btn btn-info' onClick={() => handleConfirm()}>Xác nhận</button>
+                                                    <button className='btn btn-danger' onClick={() => handleSendRemedy()}>Gửi hóa đơn</button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                    : <td>No data</td>
+                                }
                             </tbody>
                         </table>
                     </div>
