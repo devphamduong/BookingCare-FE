@@ -40,7 +40,8 @@
             "manage-handbook": "Manage Handbooks"
         },
         "doctor": {
-            "manage-schedule": "Manage doctor's schedule"
+            "manage-schedule": "Manage doctor's schedule",
+            "manage-patient": "Manage doctor's patient"
         }
     },
     "manage-user": {
@@ -65,6 +66,9 @@
         "choose-doctor": "Choose a doctor",
         "btn-save": "Save infor",
         "btn-update": "Save changes"
+    },
+    "manage-patient": {
+        "title": "Manage patients with doctor's examination"
     },
     "homepage": {
         "btn-more": "More Infor",
