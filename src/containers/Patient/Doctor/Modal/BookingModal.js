@@ -140,7 +140,7 @@ function BookingModal(props) {
                     <Modal.Title><FormattedMessage id='patient.booking-modal.title' /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className='booing-modal-body'>
+                    <div className='booking-modal-body'>
                         <div className='doctor-infor'>
                             <ProfileDoctor doctorId={dataSchedule && !_.isEmpty(dataSchedule) ? dataSchedule.doctorId : ''} dataSchedule={dataSchedule} isShowDescription={false} isShowPrice={true} isShowLinkDetail={false} />
                         </div>
